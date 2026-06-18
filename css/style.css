@@ -690,6 +690,41 @@ button {
     margin-top: 5px;
   }
 
+  /* Typography Adjustments */
+  .university-info h1, .university-info h2 {
+    font-size: 1.3rem;
+  }
+  .university-info h3 {
+    font-size: 1.1rem;
+  }
+  .university-info p {
+    font-size: 0.95rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+  
+  .hero h2 {
+    font-size: 1.2rem;
+  }
+  
+  .hero p {
+    font-size: 1rem;
+  }
+  
+  .experiment-hero h1 {
+    font-size: 1.8rem;
+  }
+  
+  .mentor-quote {
+    font-size: 1rem;
+  }
+
   .nav-links {
     display: none;
     flex-direction: column;
@@ -721,9 +756,5 @@ button {
   .hamburger {
     display: block;
     margin-left: 0;
-  }
-  
-  .hero h1 {
-    font-size: 2.5rem;
   }
 }
