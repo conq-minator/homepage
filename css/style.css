@@ -672,13 +672,22 @@ button {
   }
   
   .header .container {
-    flex-direction: column;
-    text-align: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 15px;
   }
   
   .logo-container {
-    display: none; /* Hide logos on mobile to save space, or resize them */
+    width: 75px;
+    height: 75px;
+    padding: 6px;
+  }
+
+  .university-info {
+    width: 100%;
+    order: 3;
+    margin-top: 5px;
   }
 
   .nav-links {
@@ -699,12 +708,19 @@ button {
   }
   
   .navbar .container {
-    justify-content: space-between;
+    justify-content: flex-end;
+    min-height: 60px;
   }
   
+  .theme-toggle {
+    position: static;
+    margin-right: 15px;
+    padding: 0;
+  }
+
   .hamburger {
     display: block;
-    margin-left: auto;
+    margin-left: 0;
   }
   
   .hero h1 {
