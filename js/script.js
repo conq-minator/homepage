@@ -50,6 +50,9 @@ function populateSiteConfig() {
     mentorDept: document.querySelectorAll('.data-mentor-dept'),
     mentorInst: document.querySelectorAll('.data-mentor-inst'),
     mentorQuote: document.querySelectorAll('.data-mentor-quote'),
+    contactEmail: document.querySelectorAll('.data-contact-email'),
+    contactPhone: document.querySelectorAll('.data-contact-phone'),
+    contactWebsite: document.querySelectorAll('.data-contact-website')
   };
 
   for (const [key, elements] of Object.entries(els)) {
@@ -63,6 +66,20 @@ function populateSiteConfig() {
         if (mentorKey === 'inst') val = siteConfig.mentor.institute;
         if (mentorKey === 'quote') val = siteConfig.mentor.quote;
         if (val) el.textContent = val;
+      } else if (key.startsWith('contact')) {
+        const contactKey = key.replace('contact', '').toLowerCase(); // email, phone, website
+        let val = '';
+        if (contactKey === 'email') val = siteConfig.contact.email;
+        if (contactKey === 'phone') val = siteConfig.contact.phone;
+        if (contactKey === 'website') val = siteConfig.contact.website;
+        if (val) {
+          el.textContent = val;
+          if (el.tagName === 'A') {
+            if (contactKey === 'email') el.href = 'mailto:' + val;
+            if (contactKey === 'phone') el.href = 'tel:' + val;
+            if (contactKey === 'website') el.href = val;
+          }
+        }
       } else {
         if (siteConfig[key]) {
           el.textContent = siteConfig[key];
