@@ -54,9 +54,9 @@ export const experiments = [
     shortDesc: "Investigate torsional rigidity using the static torsion apparatus.",
     icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cylinder"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/></svg>`,
     contributors: [
+      { name: "Soumik Bhuniya", role: "Contributor", linkedin: "https://www.linkedin.com/in/soumik-bhuniya-9bba80393?utm_source=share_via&utm_content=profile&utm_medium=member_android", portfolio: "" },
       { name: "Kamalika Chakraborty", role: "Contributor", linkedin: "", portfolio: "" },
-      { name: "Rohit Chakraborty", role: "Contributor", linkedin: "", portfolio: "" },
-      { name: "Soumik Bhuniya", role: "Contributor", linkedin: "", portfolio: "" }
+      { name: "Rohit Chakraborty", role: "Contributor", linkedin: "", portfolio: "" }
     ]
   },
   {
