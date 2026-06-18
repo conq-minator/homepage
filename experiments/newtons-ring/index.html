@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Physics Virtual Laboratory Experiment">
+  <title>Experiment | Physics Virtual Laboratory</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- CSS relative to experiment folder -->
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="logo-container">
+        <img src="../../assets/logos/iem-logo.png" alt="IEM Logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\\'http://www.w3.org/2000/svg\\\' width=\\\'40\\\' height=\\\'40\\\' viewBox=\\\'0 0 24 24\\\' fill=\\\'none\\\' stroke=\\\'currentColor\\\' stroke-width=\\\'2\\\' stroke-linecap=\\\'round\\\' stroke-linejoin=\\\'round\\\'%3E%3Ccircle cx=\\\'12\\\' cy=\\\'12\\\' r=\\\'10\\\'/%3E%3Cpath d=\\\'M8 12h8\\\'/%3E%3C/svg%3E'">
+      </div>
+      
+      <div class="university-info">
+        <h1 class="data-university">University of Engineering & Management</h1>
+        <h2 class="data-institute">Institute of Engineering & Management</h2>
+        <h3 class="data-website-name">Physics Virtual Laboratory</h3>
+        <p class="data-sub-department">Department of Basic Science & Humanities (BSH)</p>
+        <p class="data-campus">IEM Salt Lake Campus</p>
+      </div>
+
+      <div class="logo-container">
+        <img src="../../assets/logos/uem-logo.png" alt="UEM Logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\\'http://www.w3.org/2000/svg\\\' width=\\\'40\\\' height=\\\'40\\\' viewBox=\\\'0 0 24 24\\\' fill=\\\'none\\\' stroke=\\\'currentColor\\\' stroke-width=\\\'2\\\' stroke-linecap=\\\'round\\\' stroke-linejoin=\\\'round\\\'%3E%3Ccircle cx=\\\'12\\\' cy=\\\'12\\\' r=\\\'10\\\'/%3E%3Cpath d=\\\'M8 12h8\\\'/%3E%3C/svg%3E'">
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <ul class="nav-links" id="nav-links">
+        <li><a href="../../index.html" class="nav-link">Home</a></li>
+        <li><a href="../../index.html#experiments" class="nav-link">Experiments</a></li>
+        <li><a href="../../index.html#contact" class="nav-link">Contact</a></li>
+        <li><a href="../../about.html" class="nav-link">About</a></li>
+        
+      </ul>
+      
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Dark Mode">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        Dark Mode
+      </button>
+
+      <button class="hamburger" id="hamburger" aria-label="Toggle Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Breadcrumb -->
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="../../index.html">Home</a>
+      <span>&gt;</span>
+      <a href="../../index.html#experiments">Experiments</a>
+      <span>&gt;</span>
+      <span id="exp-breadcrumb">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main>
+    <section class="experiment-hero" id="experiment-hero">
+      <div class="container">
+        <p class="data-website-name" style="color: var(--accent-color); font-weight: 600; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px;">Physics Virtual Laboratory</p>
+        <h1 id="exp-title">Loading Experiment...</h1>
+        <p id="exp-desc" style="font-size: 1.1rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto 30px;"></p>
+        
+        <button class="btn" style="font-size: 1.1rem; padding: 15px 30px;">
+          Start Experiment
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 8px;"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- Contributors -->
+    <section class="section">
+      <div class="container contributors-section">
+        <button class="contributors-toggle" id="contributors-btn">
+          View Contributors
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        
+        <div class="contributors-content" id="contributors-content">
+          <div class="contributors-grid" id="contributors-grid">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" id="contact">
+    <div class="container">
+      <h3 class="data-website-name">Physics Virtual Laboratory</h3>
+      <div class="footer-bottom">
+        &copy; <span class="data-academic-year">2026</span> <span class="data-institute">Institute of Engineering & Management</span>. All Rights Reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="../../js/script.js"></script>
+</body>
+</html>
