@@ -58,13 +58,12 @@ function populateSiteConfig() {
   for (const [key, elements] of Object.entries(els)) {
     elements.forEach(el => {
       if (key.startsWith('mentor')) {
-        const mentorKey = key.replace('mentor', '').toLowerCase(); // name, dept, inst, quote
-        // map keys back to object
+        const mentorKey = key.replace('mentor', '').toLowerCase();
         let val = '';
-        if (mentorKey === 'name') val = siteConfig.mentor.name;
-        if (mentorKey === 'dept') val = siteConfig.mentor.department;
-        if (mentorKey === 'inst') val = siteConfig.mentor.institute;
-        if (mentorKey === 'quote') val = siteConfig.mentor.quote;
+        if (mentorKey === 'name') val = siteConfig.mentors.map(m => m.name).join(' & ');
+        if (mentorKey === 'dept') val = siteConfig.mentors[0].department;
+        if (mentorKey === 'inst') val = siteConfig.mentors[0].institute;
+        if (mentorKey === 'quote') val = siteConfig.mentorQuote;
         if (val) el.textContent = val;
       } else if (key.startsWith('contact')) {
         const contactKey = key.replace('contact', '').toLowerCase(); // email, phone, website

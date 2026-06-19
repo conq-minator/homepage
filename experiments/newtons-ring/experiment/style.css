@@ -1,0 +1,979 @@
+/* ============================================================
+   THEME SYSTEM — CSS CUSTOM PROPERTIES
+   Dark mode is the canonical default; light mode is an override.
+   ============================================================ */
+
+/* ── Dark theme tokens (applied when [data-theme="dark"] OR by default) ── */
+:root,
+[data-theme="dark"] {
+    /* Brand */
+    --primary:           #00d4ff;
+    --primary-glow:      rgba(0, 212, 255, 0.35);
+    --primary-focus:     rgba(0, 212, 255, 0.25);
+
+    /* Surfaces */
+    --bg:                #12141d;
+    --panel:             #1e212b;
+    --panel-alt:         #1b1f2b;        /* theory-card, formula-guide dark bg */
+    --panel-deep:        #151824;        /* lab-table-scroll bg */
+    --panel-deepest:     #0d0f14;        /* lab-input bg */
+    --panel-readonly:    #1a1f2e;        /* lab-input-readonly bg */
+    --panel-head:        #0f121a;        /* sim-lab-table thead */
+    --panel-th:          #12141d;        /* general th */
+    --footer-bg:         #0b0d19;
+
+    /* Borders */
+    --border:            #333;
+    --border-strong:     #444;
+    --border-table:      #3a4154;
+    --border-table-soft: #2f3545;
+
+    /* Typography */
+    --text:              #e0e0e0;
+    --text-muted:        #aaa;
+    --text-dim:          #777;
+    --text-footer:       #a4b0be;
+    --text-footer-note:  #9aa3b8;
+    --text-readonly:     #b8c5d9;
+    --text-copyright:    #64748b;
+    --text-formula-note: #aaa;
+
+    /* Interactives */
+    --tab-hover-bg:      #2a2e3d;
+    --tab-active-color:  #000;
+    --btn-clear-bg:      #ff4757;
+    --btn-clear-text:    #ffffff;
+    --btn-print-bg:      #252a3d;
+
+    /* Readout */
+    --readout-bg:        #000;
+    --readout-text:      #0f0;
+    --readout-border:    #0f0;
+    --readout-glow:      #0f03;
+
+    /* Accent text */
+    --accent-names:      #e2e8f0;
+    --footer-heading:    #00e5ff;
+
+    /* Theme toggle */
+    --toggle-bg:         #2a2e3d;
+    --toggle-border:     #444;
+    --toggle-icon:       #00d4ff;
+}
+
+/* ── Light theme token overrides ── */
+[data-theme="light"] {
+    /* Brand — same primary hue but slightly deeper for contrast on white */
+    --primary:           #0099bb;
+    --primary-glow:      rgba(0, 153, 187, 0.25);
+    --primary-focus:     rgba(0, 153, 187, 0.20);
+
+    /* Surfaces */
+    --bg:                #f0f2f7;
+    --panel:             #ffffff;
+    --panel-alt:         #f7f9fc;
+    --panel-deep:        #eef1f6;
+    --panel-deepest:     #ffffff;
+    --panel-readonly:    #f0f4f8;
+    --panel-head:        #e4e8f0;
+    --panel-th:          #e4e8f0;
+    --footer-bg:         #e8ecf5;;   /* keep footer dark in light mode — intentional brand anchor */
+
+    /* Borders */
+    --border:            #d0d5e0;
+    --border-strong:     #b8bfcc;
+    --border-table:      #c8cfe0;
+    --border-table-soft: #d8dde8;
+
+    /* Typography */
+    --text:              #1a1e2e;
+    --text-muted:        #556070;
+    --text-dim:          #8090a8;
+    --text-footer:       #3a4560;
+    --text-footer-note:  #556070;
+    --text-readonly:     #3a4560;
+    --text-copyright:    #6a7a92;
+    --text-formula-note: #556070;
+
+    /* Interactives */
+    --tab-hover-bg:      #e8edf5;
+    --tab-active-color:  #ffffff;
+    --btn-clear-bg:      #e53e4e;
+    --btn-clear-text:    #ffffff;
+    --btn-print-bg:      #e4eaf4;
+
+    /* Readout (keep green LCD feel — familiar) */
+    --readout-bg:        #0a1208;
+    --readout-text:      #00dd00;
+    --readout-border:    #00aa00;
+    --readout-glow:      rgba(0, 200, 0, 0.12);
+
+    /* Accent text */
+    --accent-names:      #1a1e2e;
+    --footer-heading:    #0077aa;
+
+    /* Theme toggle */
+    --toggle-bg:         #e0e5ef;
+    --toggle-border:     #b0baca;
+    --toggle-icon:       #0099bb;
+}
+
+/* ── Smooth transitions on every themeable property ── */
+body,
+body *:not(canvas):not(#ringCanvas):not(#setupCanvas):not(#vernierCanvas) {
+    transition:
+        background-color 0.3s ease,
+        color            0.3s ease,
+        border-color     0.3s ease,
+        box-shadow       0.25s ease;
+}
+
+/* ── Theme toggle button ── */
+.theme-toggle {
+    position: fixed;
+    top: 14px;
+    right: 18px;
+    z-index: 9999;
+    background: var(--toggle-bg);
+    border: 1.5px solid var(--toggle-border);
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: var(--toggle-icon);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    transition:
+        background 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease,
+        transform 0.15s ease;
+    padding: 0;
+    flex-shrink: 0;
+}
+.theme-toggle:hover {
+    filter: none;
+    transform: scale(1.1);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.28);
+}
+.theme-toggle:focus-visible {
+    outline: 3px solid var(--primary);
+    outline-offset: 3px;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    margin: 0;
+    padding: 20px 20px 0 20px; /* Kept your spacing but cleared bottom padding to prevent double spacing */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;         /* Key Fix: Guarantees the body fills the entire monitor screen height */
+    box-sizing: border-box;
+}
+h1 {
+    color: var(--primary);
+    margin-bottom: 20px;
+}
+
+/* ===================== TAB NAVIGATION ===================== */
+.tab-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+    background: var(--panel);
+    padding: 8px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    max-width: 1100px;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: center;
+    position: sticky;
+    top: 12px;
+    z-index: 100;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+}
+
+.tab-btn {
+    flex: 1 1 auto;
+    min-width: 140px;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid transparent;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.tab-btn:hover {
+    background: var(--tab-hover-bg);
+    color: var(--primary);
+}
+
+.tab-btn.active {
+    background: var(--primary);
+    color: var(--tab-active-color);
+    border-color: var(--primary);
+    box-shadow: 0 0 15px var(--primary-glow);
+}
+
+/* ===================== TAB PANELS ===================== */
+.tab-panel {
+    display: none;
+    width: 100%;
+    max-width: 1100px;
+}
+
+.tab-panel.active {
+    display: block;
+    animation: fadeIn 0.25s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===================== CONTENT CARDS (Theory/Procedure/Error) ===================== */
+.content-card {
+    background: var(--panel);
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    min-height: 400px;
+}
+
+.content-card h2 {
+    color: var(--primary);
+    margin-top: 0;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+}
+
+.placeholder-note {
+    color: var(--text-dim);
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+.content-body {
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 1rem;
+}
+
+.content-body ol {
+    padding-left: 24px;
+}
+
+.content-body li {
+    margin-bottom: 18px;
+    line-height: 1.8;
+}
+
+.content-body h3 {
+    color: var(--primary);
+    margin-top: 28px;
+    margin-bottom: 12px;
+}
+
+.content-body ul {
+    padding-left: 24px;
+    line-height: 1.8;
+}
+
+.theory-image-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin: 25px 0;
+}
+
+.theory-image-grid img {
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid var(--border-strong);
+    background: white;
+}
+
+.formula {
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--primary);
+    font-weight: bold;
+    margin: 18px 0;
+}
+
+/* ================= THEORY FIGURES ================= */
+.theory-figures {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+.theory-card {
+    background: var(--panel-alt);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+    text-align: center;
+    box-shadow: 0 0 18px rgba(0,0,0,0.35);
+    width: 100%;
+    max-width: 700px;
+}
+
+.theory-card h4 {
+    color: var(--primary);
+    margin-bottom: 14px;
+    font-size: 1rem;
+}
+
+#setupTheoryCanvas {
+    width: 100%;
+    max-width: 700px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid var(--border-strong);
+    object-fit: contain;
+}
+
+#theorySetupImage {
+    width: 100%;
+    max-width: 700px;
+    height: auto;
+    max-height: 500px;
+    display: block;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid var(--border-strong);
+    object-fit: contain;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+/* ===================== SIMULATION LAYOUT ===================== */
+.lab-layout {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 20px;
+    width: 100%;
+}
+
+/* Left Column */
+.view-card {
+    background: var(--panel);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    /* margin-bottom: 20px; */
+    text-align: center;
+}
+
+canvas {
+    border-radius: 8px;
+    max-width: 100%;
+}
+
+#ringCanvas {
+    background: #000;
+    border: 6px solid var(--border-strong);
+    border-radius: 50%;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+}
+
+#setupCanvas {
+    background: #222;
+    border: 1px solid var(--border-strong);
+    margin-top: 15px;
+    height: 160px;
+    width: 100%;
+}
+
+/* Right Column */
+.control-card {
+    background: var(--panel);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.readout {
+    background: var(--readout-bg);
+    color: var(--readout-text);
+    font-family: monospace;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1.8rem;
+    border: 1px solid var(--readout-border);
+    box-shadow: inset 0 0 10px var(--readout-glow);
+}
+
+input[type="range"] {
+    width: 100%;
+    accent-color: var(--primary);
+}
+
+label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Bottom Section */
+.bottom-section {
+    grid-column: 1 / span 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* ===================== LAB RECORD TABLES (Simulation tab) ===================== */
+.lab-record-stack {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 8px;
+    width: 100%;
+}
+
+.lab-record-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.btn-print-lab {
+    background: var(--btn-print-bg);
+    color: var(--primary);
+    border: 1px solid var(--border-strong);
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.9rem;
+    letter-spacing: 0.3px;
+}
+
+.btn-print-lab:hover {
+    filter: brightness(1.15);
+    border-color: var(--primary);
+}
+
+.lab-record-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px 22px 18px;
+    box-sizing: border-box;
+}
+
+.lab-record-card-header {
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 14px;
+}
+
+.lab-record-title {
+    margin: 0 0 6px 0;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: 0.02em;
+    font-family: "Segoe UI", "Cambria Math", Georgia, serif;
+}
+
+.lab-record-subtitle {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--text);
+    line-height: 1.45;
+}
+
+.lab-record-note {
+    margin: 10px 0 0;
+    font-size: 0.88rem;
+    color: var(--text-footer-note);
+    font-style: italic;
+}
+
+.math-var {
+    font-style: italic;
+    font-family: "Cambria Math", "Times New Roman", serif;
+}
+
+.lab-table-scroll {
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 8px;
+    border: 1px solid var(--border-table-soft);
+    background: var(--panel-deep);
+}
+
+.sim-lab-table {
+    width: 100%;
+    min-width: 720px;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 0;
+    font-size: 0.82rem;
+    font-feature-settings: "tnum" 1, "lnum" 1;
+}
+
+.sim-lab-table th,
+.sim-lab-table td {
+    border: 1px solid var(--border-table);
+    padding: 6px 8px;
+    text-align: center;
+    vertical-align: middle;
+    background: var(--panel-deep);
+}
+
+.sim-lab-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: var(--panel-head);
+    color: var(--primary);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    box-shadow: 0 1px 0 var(--border-table);
+    font-size: 0.78rem;
+    line-height: 1.35;
+    padding: 8px 6px;
+}
+
+.sim-lab-table thead tr:nth-child(2) th {
+    top: 48px;
+    z-index: 2;
+}
+
+.sim-lab-table .th-ring-no {
+    min-width: 5.5rem;
+    z-index: 3;
+}
+
+.sim-lab-table .th-diameter {
+    min-width: 6.5rem;
+}
+
+.sim-lab-table .th-mean-d {
+    min-width: 5rem;
+}
+
+.th-wrap {
+    display: inline-block;
+    max-width: 8rem;
+}
+
+.lab-input {
+    width: 100%;
+    min-width: 3.5rem;
+    box-sizing: border-box;
+    padding: 6px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--border-table);
+    background: var(--panel-deepest);
+    color: var(--text);
+    font-size: 0.85rem;
+    font-family: ui-monospace, "Cascadia Code", "Segoe UI", sans-serif;
+    text-align: center;
+}
+
+.lab-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 1px var(--primary-focus);
+}
+
+.lab-input-ring {
+    font-family: inherit;
+}
+
+.lab-input-readonly {
+    background: var(--panel-readonly);
+    color: var(--text-readonly);
+    cursor: default;
+}
+
+.table-r-calculation .lab-input-readonly {
+    font-size: 0.8rem;
+}
+
+.lab-result-footer {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--border-table);
+}
+
+.lab-result-line {
+    margin: 0;
+    font-size: 1.05rem;
+    color: var(--text);
+    line-height: 1.6;
+}
+
+.lab-result-blank {
+    display: inline-block;
+    min-width: 8rem;
+    padding: 0 4px 2px;
+    border-bottom: 2px solid var(--primary);
+    color: var(--primary);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Print */
+@media print {
+    body {
+        background: #fff;
+        color: #000;
+        padding: 12px;
+    }
+
+    h1 {
+        color: #000;
+    }
+
+    .tab-nav,
+    .view-card,
+    .control-card,
+    .bottom-section,
+    .lab-record-toolbar,
+    .clear-btn,
+    .tab-panel:not(#tab-simulation) {
+        display: none !important;
+    }
+
+    .tab-panel#tab-simulation {
+        display: block !important;
+    }
+
+    .lab-layout {
+        display: block !important;
+    }
+
+    .lab-record-print-area {
+        display: block !important;
+        page-break-inside: avoid;
+    }
+
+    .lab-record-card {
+        background: #fff;
+        border: 1px solid #000;
+        box-shadow: none;
+        break-inside: avoid;
+        margin-bottom: 16px;
+    }
+
+    .lab-record-title,
+    .lab-record-subtitle,
+    .sim-lab-table thead th {
+        color: #000;
+        background: #f0f0f0 !important;
+        box-shadow: none;
+    }
+
+    .sim-lab-table th,
+    .sim-lab-table td {
+        background: #fff !important;
+        color: #000;
+        border: 1px solid #333 !important;
+    }
+
+    .lab-input,
+    .lab-input-readonly {
+        border: 1px solid #555 !important;
+        background: #fff !important;
+        color: #000 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .lab-table-scroll {
+        border: 1px solid #333;
+        overflow: visible !important;
+    }
+
+    .sim-lab-table thead th {
+        position: static !important;
+    }
+}
+
+.data-table {
+    background: var(--panel);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    height: 450px;
+    overflow-y: auto;
+    margin-top: 30px;
+    padding-top: 5px;
+}
+
+.formula-guide {
+    background: var(--panel-alt);
+    padding: 20px;
+    border-radius: 12px;
+    border-left: 5px solid var(--primary);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th,
+td {
+    border: 1px solid var(--border-strong);
+    padding: 8px;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+th {
+    background: var(--panel-th);
+    color: var(--primary);
+}
+
+button {
+    background: var(--primary);
+    color: var(--tab-active-color);
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    filter: brightness(1.2);
+}
+
+.clear-btn {
+    background: var(--btn-clear-bg);
+    color: var(--btn-clear-text);
+    margin-top: 10px;
+    width: 100%;
+}
+
+code {
+    color: var(--primary);
+    font-size: 1.1rem;
+}
+
+.hint-text {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+}
+
+/* ===================== SLIDER ARROW ROW ===================== */
+.slider-arrow-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.slider-arrow-row input[type="range"] {
+    flex: 1;
+}
+
+.arrow-btn {
+    background: var(--primary);
+    color: var(--tab-active-color);
+    border: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    box-shadow: 0 0 8px var(--primary-glow);
+    transition: filter 0.15s;
+}
+
+.arrow-btn:hover {
+    filter: brightness(1.25);
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 900px) {
+    .lab-layout {
+        grid-template-columns: 1fr;
+    }
+    .bottom-section {
+        grid-column: 1;
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .lab-record-card {
+        padding: 16px 12px;
+    }
+
+    .lab-record-title {
+        font-size: 1.15rem;
+    }
+
+    .sim-lab-table {
+        font-size: 0.75rem;
+        min-width: 640px;
+    }
+
+    .lab-input {
+        min-width: 2.75rem;
+        padding: 5px 4px;
+        font-size: 0.78rem;
+    }
+}
+/* ============================================================
+   ADVANCED HARDWARE WORKBENCH & OPTICAL MODULES
+   ============================================================ */
+#setupCanvas {
+    background: #11141a !important;
+    border: 2px solid #2a3142 !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+    height: 260px !important; /* Overriding previous shorter style height */
+}
+
+#vernierCanvas {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    background: #1e222d;
+    border: 2px solid #3a4154;
+    border-radius: 8px;
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
+}
+
+/* Subtle glowing accent overlay for active light ray emissions */
+@keyframes beamPulse {
+    0% { opacity: 0.75; filter: drop-shadow(0 0 2px #ffb300); }
+    50% { opacity: 1.0; filter: drop-shadow(0 0 6px #ffcc00); }
+    100% { opacity: 0.75; filter: drop-shadow(0 0 2px #ffb300); }
+}
+
+/* ============================================================
+   HIGH-FIDELITY LABORATORY VIRTUAL APP FOOTER
+   ============================================================ */
+.vlab-footer {
+    background-color: var(--footer-bg);
+    color: var(--text-footer);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    padding: 40px 24px 20px 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    
+    margin-top: auto;
+    margin-left: -20px;
+    margin-right: -20px;
+    
+    width: calc(100% + 40px);
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+/* Flexbox Layout Structure */
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 32px;
+}
+
+/* Individual Content Columns */
+.footer-column {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Layout Proportions matching your reference wireframe image */
+.footer-column.col-large {
+    flex: 2 1 300px; /* Gives the description area a broader span */
+}
+
+.footer-column.col-medium {
+    flex: 1 1 200px;
+}
+
+/* Heading Typography */
+.vlab-footer h3 {
+    color: var(--footer-heading);
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 0 0 16px 0;
+    letter-spacing: 0.5px;
+}
+
+/* Text Element Spacing */
+.vlab-footer p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0 0 8px 0;
+}
+
+/* Highlight variations for names and team members */
+.team-member, .mentor-name {
+    color: var(--accent-names);
+    font-weight: 500;
+}
+
+/* Bottom Copyright Bar Alignment */
+.footer-bottom {
+    max-width: 1200px;
+    margin: 30px auto 0 auto;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    text-align: center;
+}
+
+.footer-bottom p {
+    font-size: 0.85rem;
+    color: var(--text-copyright);
+    margin: 0;
+}
+
+/* Responsive Adaptive Adjustments for smaller viewports */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        gap: 24px;
+    }
+    .footer-column {
+        flex: 1 1 100% !important;
+    }
+}

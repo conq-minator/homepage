@@ -447,13 +447,20 @@ button {
   border-bottom: 1px solid var(--border-color);
 }
 
+.mentors-grid {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
 .mentor-card {
   background-color: var(--card-bg);
   padding: 40px;
   border-radius: 12px;
   box-shadow: var(--card-shadow);
-  max-width: 800px;
-  margin: 0 auto;
+  max-width: 380px;
+  flex: 1 1 300px;
   text-align: center;
 }
 
@@ -467,6 +474,11 @@ button {
   justify-content: center;
   align-items: center;
   color: var(--text-secondary);
+}
+
+.mentor-quote-container {
+  max-width: 800px;
+  margin: 30px auto 0;
 }
 
 .mentor-quote {

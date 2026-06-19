@@ -10,13 +10,21 @@ export const siteConfig = {
   academicYear: "2026",
   heroSubtitle: "Interactive Physics Experiments for Engineering Students",
   heroDescription: "Welcome to the Physics Virtual Laboratory developed by the Physics Laboratory, Department of Basic Science & Humanities, Institute of Engineering & Management (IEM), Salt Lake Campus. This platform enables engineering students to perform realistic virtual physics experiments, promoting conceptual understanding through immersive digital laboratory experiences.",
-  mentor: {
-    name: "Prof. Subarna Datta",
-    department: "Department of Basic Science & Humanities (Physics)",
-    institute: "Institute of Engineering & Management (IEM)",
-    campus: "Salt Lake Campus",
-    quote: "This Physics Virtual Laboratory has been conceptualized and developed under the academic guidance and mentorship of Prof. Subarna Datta. The objective of this platform is to provide engineering students with an interactive, realistic, and accessible environment for performing physics experiments digitally, thereby enhancing conceptual understanding and laboratory learning."
-  },
+  mentors: [
+    {
+      name: "Dr. Subarna Datta",
+      department: "Department of Basic Science & Humanities (Physics)",
+      institute: "Institute of Engineering & Management (IEM)",
+      campus: "Salt Lake Campus"
+    },
+    {
+      name: "Prof. Sayan Paul",
+      department: "Department of Basic Science & Humanities (Physics)",
+      institute: "Institute of Engineering & Management (IEM)",
+      campus: "Salt Lake Campus"
+    }
+  ],
+  mentorQuote: "This Physics Virtual Laboratory has been conceptualized and developed under the academic guidance and mentorship of Dr. Subarna Datta and Prof. Sayan Paul. The objective of this platform is to provide engineering students with an interactive, realistic, and accessible environment for performing physics experiments digitally, thereby enhancing conceptual understanding and laboratory learning.",
   contact: {
     email: "contact@iem.edu", // Placeholder
     phone: "+91 0000000000",   // Placeholder
