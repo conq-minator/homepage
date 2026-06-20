@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Lab: Determination of Rigidity Modulus</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="tools/screwGauge/screwGauge.css">
+    <link rel="stylesheet" href="tools/vernierCaliper/vernier.css">
+</head>
+<body class="light-theme">
+
+<div class="main-container">
+   <header class="main-header">
+    <div class="logo-box">
+        <img src="iem-logo.png" alt="IEM Logo" class="school-logo">
+    </div>
+
+    <div class="title-box">
+        <h1>Virtual Physics Laboratory</h1>
+        <p style="color: var(--text-muted);">Determination of Modulus of Rigidity by Static Method</p>
+    </div>
+
+    <div class="logo-box right-side">
+        <img src="uem-logo.png" alt="UEM Logo" class="school-logo">
+        <div class="header-buttons">
+            <button onclick="openHelpModal()" id="help-btn" class="help-btn" title="How to perform the experiment"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+            <button onclick="toggleTheme()" id="theme-btn" class="theme-btn"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg> Dark Mode</button>
+        </div>
+    </div>
+</header>
+
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab(event, 'theory')">Theory</button>
+        <button class="tab-btn" onclick="switchTab(event, 'apparatus')">Apparatus</button>
+        <button class="tab-btn" onclick="switchTab(event, 'procedure')">Procedure</button>
+        <button class="tab-btn" onclick="switchTab(event, 'measurements')">Measurements</button>
+        <button class="tab-btn tab-btn-locked" id="experiment-tab-btn" onclick="switchTab(event, 'experiment')" title="Complete all required measurements first">Experiment Simulation</button>
+    </div>
+
+    <div id="experiment-lock-toast" class="experiment-lock-toast" role="status" aria-live="polite"></div>
+
+    <div id="theory" class="tab-content active">
+        <div class="text-panel">
+            <h2>Theory & Principle</h2>
+            <p>The <strong>Modulus of Rigidity</strong> (or Shear Modulus), denoted by <strong>G</strong> or <strong>η</strong>, is defined as the ratio of shear stress to shear strain within the elastic limit of a material. It measures the rigidity of a body or its resistance to deformation caused by a shearing force.</p>
+            
+            <p>In the static torsion method, a cylindrical rod is clamped solidly at one end and subjected to a twisting couple (torque) at the other end. This is achieved using a pulley and a suspended mass.</p>
+            
+            <p>When a mass <em>M</em> is hung on a string wound around a pulley of radius <em>R</em>, the torque applied to the free end of the rod is:</p>
+            <div class="formula-box">Torque (τ) = M &times; g &times; R</div>
+            
+            <p>Equating the applied torque to the restoring torque gives the formula for the Rigidity Modulus:</p>
+            
+            <div class="formula-box">
+                η = (180 &times; l &times; d &times; g) / (&pi;<sup>2</sup> &times; r<sup>4</sup>) &times; (m / &phi;)
+            </div>
+            
+            <p><strong>Where:</strong></p>
+            <ul>
+                <li><strong>m</strong> = Mass of the applied load in kg</li>
+                <li><strong>g</strong> = Acceleration due to gravity (9.81 m/s&sup2;)</li>
+                <li><strong>d</strong> = Diameter of the pulley in meters</li>
+                <li><strong>l</strong> = Pin separation (length of experimental rod between pointers) in meters</li>
+                <li><strong>r</strong> = Radius of the cross-section of the rod in meters</li>
+                <li><strong>&phi;</strong> = The angle of twist measured in degrees</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="apparatus" class="tab-content">
+        <div class="text-panel">
+            <h2>Apparatus Required</h2>
+            <p>To successfully perform the static torsion experiment in a physical laboratory setting, the following equipment is required:</p>
+            <ul>
+                <li><strong>Static Torsion Apparatus:</strong> The core setup consisting of a heavy cast-iron or steel frame. It features a mechanism to solidly clamp the experimental cylindrical rod at one end, while the other end is attached to a grooved pulley wheel.</li>
+                <li><strong>Slotted Weights and Hanger:</strong> A set of standard cast-iron or brass masses (commonly in 500g increments) and a hanger. These are used to apply a precise downward gravitational force, which creates the twisting torque on the pulley.</li>
+                <li><strong>Pointers and Circular Scales:</strong> Two metallic pointers clamped to the experimental rod at specific distances. They move across fixed, graduated circular scales (often marked in degrees or half-degrees) to measure the angle of twist at different points along the rod.</li>
+                <li><strong>Vernier Caliper:</strong> A high-precision measurement tool used to accurately measure the diameter of the experimental rod and the diameter of the pulley. These measurements are crucial for calculating the radii (<em>r</em> and <em>R</em>).</li>
+                <li><strong>Meter Scale or Measuring Tape:</strong> A standard metric ruler used to measure the working pin separation (<em>L</em>), which is the exact distance between the two pointers.</li>
+                <li><strong>Inextensible String:</strong> A strong, thin cord wrapped around the groove of the pulley to connect it to the weight hanger. It must not stretch under the applied load.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="procedure" class="tab-content">
+        <div class="text-panel">
+            <h2>Experimental Procedure</h2>
+            <p>Follow these steps to conduct the virtual experiment:</p>
+            <ol>
+                <li><strong>Apparatus Setup:</strong> Navigate to the Experiment Simulation tab. You will see a rod fixed at the right end and attached to a pulley wheel at the left end.</li>
+                <li><strong>Set Parameters:</strong> In the Data Input & Control panel, select the material of the rod and specify the Pin Separation L.</li>
+                <li><strong>Measurements:</strong> Open the <strong>Measurements</strong> tab. Use the Screw Gauge and Vernier Caliper to measure rod diameter and pulley diameter (four readings each). Averaged values unlock the experiment and populate the simulation automatically.</li>
+                <li><strong>Initial Reading:</strong> Ensure the live load (M) is set to 0.0 kg. Click <strong>Save Data Point</strong> to log your zero-error state.</li>
+                <li><strong>Loading the Rod:</strong> Click the <strong>+</strong> button on the slider to add weights in 0.5 kg increments.</li>
+                <li><strong>Record Observations:</strong> As you add weight, the rod will twist. Observe the readings on Scale 1 (&theta;<sub>1</sub>) and Scale 2 (&theta;<sub>2</sub>) measured in degrees. The zoomed-in dials will clearly show this angular deflection.</li>
+                <li><strong>Save Data:</strong> Click <strong>Save Data Point</strong>. This will log the current load, angles, and calculated Modulus of Rigidity (G) into the observation table.</li>
+                <li><strong>Plot Graph:</strong> Continue adding weights up to 5.0 kg (or until the scale limit is reached), saving data at regular intervals. A graph of <em>Mean Deflection vs. Load</em> will plot automatically. It should represent a straight line passing through the origin, verifying Hooke's Law for torsion.</li>
+            </ol>
+        </div>
+    </div>
+
+    <div id="measurements" class="tab-content">
+        <div class="measurements-layout">
+            <aside class="panel measurements-progress-panel">
+                <h2>Progress</h2>
+                <ul class="progress-tracker" id="measurements-progress-list">
+                    <li><span id="prog-screw" class="progress-pending">☐</span> Screw Gauge Completed</li>
+                    <li><span id="prog-vernier" class="progress-pending">☐</span> Vernier Caliper Completed</li>
+                    <li><span id="prog-experiment" class="progress-pending">☐</span> Experiment Performed</li>
+                    <li><span id="prog-graph" class="progress-pending">☐</span> Graph Generated</li>
+                </ul>
+            </aside>
+
+            <div class="measurements-main">
+                <div class="text-panel measurements-intro">
+                    <h2>Instrument Measurements</h2>
+                    <p>Before performing the torsion experiment, measure the apparatus dimensions using a <strong>Screw Gauge</strong> (rod diameter) and <strong>Vernier Caliper</strong> (pulley diameter). The averaged values will become the official dimensions for all calculations.</p>
+                </div>
+
+                <div class="panel measurements-step-panel" id="measurements-step-1">
+                    <h3 style="color: var(--accent); margin-top: 0;">Step 1: Screw Gauge Measurement</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 16px;">Measure the experimental rod diameter. Complete all four readings.</p>
+                    <div id="screw-gauge-mount"></div>
+                </div>
+
+                <div class="panel measurements-step-panel" id="measurements-step-2">
+                    <h3 style="color: var(--accent); margin-top: 0;">Step 2: Vernier Caliper Measurement</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 16px;">Measure the pulley diameter. Available after Step 1 is complete.</p>
+                    <div id="vernier-caliper-mount"></div>
+                </div>
+
+                <div class="panel measurements-step-panel" id="measurements-step-3" style="display: none;">
+                    <h3 style="color: var(--accent); margin-top: 0;">Step 3: Generate Final Average Values</h3>
+                    <div id="measurements-average-calc" style="display: none;"></div>
+                </div>
+
+                <div class="panel measurements-step-panel" id="measurements-step-4" style="display: none;">
+                    <h3 style="color: var(--accent); margin-top: 0;">Step 4: Unlock Experiment</h3>
+                    <div id="measurements-unlock-msg" style="display: none; color: var(--text-muted);"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Templates fallback if external HTML fragments fail to load -->
+    <template id="screw-gauge-template">
+        <div class="screw-gauge-tool" id="screw-gauge-root">
+            <div class="sg-header">
+                <h3>Screw Gauge — Rod Diameter <button type="button" class="inline-help-btn" onclick="openInstrumentHelp('screwGauge')" title="How to read the Screw Gauge"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button></h3>
+                <span class="sg-reading-badge" data-sg-badge>Reading 1 of 4</span>
+            </div>
+            <div class="sg-instrument-wrap" style="position: relative; overflow: hidden; cursor: grab;">
+                <div class="zoom-toolbar" style="position: absolute; top: 10px; right: 10px; display: flex; gap: 5px; background: var(--bg-panel); border: 1px solid var(--border); border-radius: 4px; padding: 4px; z-index: 10; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    <button type="button" onclick="zoomInstrument('screwGauge', 1.2)" title="Zoom In" style="background: none; border: none; cursor: pointer; padding: 4px; color: var(--text-main); display: flex; align-items: center; justify-content: center;"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg></button>
+                    <button type="button" onclick="zoomInstrument('screwGauge', 0.833)" title="Zoom Out" style="background: none; border: none; cursor: pointer; padding: 4px; color: var(--text-main); display: flex; align-items: center; justify-content: center;"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg></button>
+                    <button type="button" onclick="resetZoom('screwGauge')" title="Reset Zoom" style="background: none; border: none; cursor: pointer; padding: 4px; color: var(--text-main); display: flex; align-items: center; justify-content: center;"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><polyline points="3 3 3 8 8 8"></polyline></svg></button>
+                </div>
+                <svg class="sg-svg" data-sg-svg viewBox="0 0 520 240" width="100%" height="auto" preserveAspectRatio="xMidYMid meet" aria-label="Screw gauge simulation" style="transform-origin: center; transition: transform 0.1s ease;"></svg>
+            </div>
+            <div class="sg-guide-box" data-sg-guide></div>
+            <div class="sg-input-section" data-sg-inputs style="display: none;">
+                <div class="sg-input-row">
+                    <div class="sg-field"><label>Main Scale Reading (MSR) mm</label><input type="number" step="0.1" data-sg-msr></div>
+                    <div class="sg-field"><label>Circular Scale Reading (CSR)</label><input type="number" step="1" min="0" max="99" data-sg-csr></div>
+                    <div class="sg-field"><label>Final Reading mm</label><input type="number" step="0.01" data-sg-final></div>
+                </div>
+                <div class="sg-actions"><button type="button" class="primary" data-sg-submit>Check Answers</button></div>
+                <div class="sg-error" data-sg-error></div>
+            </div>
+            <div class="sg-actions" data-sg-nav"><button type="button" class="primary" data-sg-next style="display: none;">Next Reading</button></div>
+        </div>
+    </template>
+
+    <template id="vernier-caliper-template">
+        <div class="vernier-caliper-tool" id="vernier-caliper-root">
+            <div class="vc-header">
+                <h3>Vernier Caliper — Pulley Diameter <button type="button" class="inline-help-btn" onclick="openInstrumentHelp('vernier')" title="How to read the Vernier Caliper"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button></h3>
+                <span class="vc-reading-badge" data-vc-badge>Reading 1 of 4</span>
+            </div>
+            <div class="vc-instrument-wrap" style="position: relative; overflow: hidden; cursor: grab; width: 100%; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-panel); margin-bottom: 20px;">
+                <div class="zoom-toolbar" style="position: absolute; top: 10px; right: 10px; display: flex; gap: 5px; background: var(--bg-panel); border: 1px solid var(--border); border-radius: 4px; padding: 4px; z-index: 10; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    <button type="button" onclick="zoomInstrument('vernier', 1.2)" title="Zoom In" style="background: none; border: none; cursor: pointer; padding: 4px; color: var(--text-main); display: flex; align-items: center; justify-content: center;"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg></button>
+                    <button type="button" onclick="zoomInstrument('vernier', 0.833)" title="Zoom Out" style="background: none; border: none; cursor: pointer; padding: 4px; color: var(--text-main); display: flex; align-items: center; justify-content: center;"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg></button>
+                    <button type="button" onclick="resetZoom('vernier')" title="Reset Zoom" style="background: none; border: none; cursor: pointer; padding: 4px; color: var(--text-main); display: flex; align-items: center; justify-content: center;"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><polyline points="3 3 3 8 8 8"></polyline></svg></button>
+                </div>
+                <svg class="vc-svg" data-vc-svg viewBox="0 -60 1200 340" width="100%" height="auto" preserveAspectRatio="xMidYMid meet" aria-label="Vernier caliper simulation" style="transform-origin: center; transition: transform 0.1s ease;"></svg>
+            </div>
+            <div class="vc-guide-box" data-vc-guide></div>
+            <div class="vc-input-section" data-vc-inputs style="display: none;">
+                <div class="vc-input-row">
+                    <div class="vc-field"><label>Main Scale Reading (MSR) cm</label><input type="number" step="0.1" data-vc-msr></div>
+                    <div class="vc-field"><label>Vernier Coincidence</label><input type="number" step="1" min="0" max="9" data-vc-vernier></div>
+                    <div class="vc-field"><label>Final Reading cm</label><input type="number" step="0.01" data-vc-final></div>
+                </div>
+                <div class="vc-actions"><button type="button" class="primary" data-vc-submit>Check Answers</button></div>
+                <div class="vc-error" data-vc-error></div>
+            </div>
+            <div class="vc-actions" data-vc-nav"><button type="button" class="primary" data-vc-next style="display: none;">Next Reading</button></div>
+        </div>
+    </template>
+
+    <div id="experiment" class="tab-content experiment-locked">
+        <div id="experiment-lock-overlay" class="experiment-lock-overlay">
+            <p>Complete all required measurements before accessing the experiment.</p>
+            <button type="button" class="primary" onclick="goToMeasurementsTab()">Go to Measurements</button>
+        </div>
+        <div class="dashboard">
+            <div class="panel experiment-panel">
+                <h2>Apparatus Simulation</h2>
+                <div class="svg-container">
+                    <svg width="100%" height="100%" viewBox="0 0 500 350">
+                        <rect x="100" y="270" width="300" height="20" fill="var(--svg-base)" rx="5"/>
+                        <rect x="240" y="110" width="20" height="160" fill="var(--svg-pillar)"/>
+                        <rect x="420" y="90" width="20" height="40" fill="var(--svg-clamp)" stroke="var(--svg-pillar)"/>
+                        <rect x="250" y="105" width="170" height="10" fill="var(--svg-rod)"/>
+                        <g id="pulley-group" style="transform-origin: 250px 110px; transition: transform 0.1s linear;">
+                            <circle cx="250" cy="110" r="45" fill="var(--svg-pulley)" stroke="var(--svg-base)" stroke-width="4"/>
+                            <line x1="250" y1="65" x2="250" y2="155" stroke="var(--svg-base)" stroke-width="2"/>
+                            <line x1="205" y1="110" x2="295" y2="110" stroke="var(--svg-base)" stroke-width="2"/>
+                            <circle cx="250" cy="110" r="8" fill="var(--bg-main)"/>
+                        </g>
+                        <g id="pointer1" style="transform-origin: 310px 110px; transition: transform 0.1s linear;">
+                            <line x1="310" y1="110" x2="310" y2="58" stroke="var(--accent)" stroke-width="3"/>
+                        </g>
+                        <g id="pointer2" style="transform-origin: 380px 110px; transition: transform 0.1s linear;">
+                            <line x1="380" y1="110" x2="380" y2="58" stroke="var(--accent)" stroke-width="3"/>
+                        </g>
+                        <g id="weight-system">
+                            <line id="string" x1="205" y1="110" x2="205" y2="200" stroke="var(--svg-string)" stroke-width="2"/>
+                            <polygon points="195,200 215,200 205,180" fill="var(--svg-rod)"/> 
+                            <g id="dynamic-weights"></g>
+                        </g>
+                    </svg>
+                </div>
+                <div class="zoomed-views">
+                    <div class="zoom-box">
+                        <h4 style="margin: 0 0 10px 0; text-align: center;">Magnified Scale 1</h4>
+                        <svg viewBox="-120 -120 240 140" width="100%" height="120px">
+                            <g id="scale-ticks-1"></g>
+                            <path d="M 0 0 L 0 -110" stroke="var(--accent)" stroke-width="3" id="zoomed-pointer1" style="transform-origin: 0px 0px;"/>
+                        </svg>
+                    </div>
+                    <div class="zoom-box">
+                        <h4 style="margin: 0 0 10px 0; text-align: center;">Magnified Scale 2</h4>
+                        <svg viewBox="-120 -120 240 140" width="100%" height="120px">
+                            <g id="scale-ticks-2"></g>
+                            <path d="M 0 0 L 0 -110" stroke="var(--accent)" stroke-width="3" id="zoomed-pointer2" style="transform-origin: 0px 0px;"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h2>Data Input & Control</h2>
+                <div class="control-group">
+                    <label>Material</label>
+                    <select id="material">
+                        <option value="steel">Steel</option>
+                        <option value="iron">Iron</option>
+                        <option value="copper">Copper</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Pin Separation L (cm)</label>
+                    <input type="number" id="pin-sep" value="100">
+                </div>
+                <div class="control-group">
+                    <label>Pulley Diameter D (cm)</label>
+                    <input type="number" id="pulley-d" value="" readonly placeholder="From measurements" title="Measured via Vernier Caliper — complete Measurements tab first">
+                </div>
+                <div class="control-group">
+                    <label>Rod Diameter d (mm)</label>
+                    <input type="number" id="rod-d" value="" readonly placeholder="From measurements" title="Measured via Screw Gauge — complete Measurements tab first">
+                </div>
+                <p class="dimension-hint" style="font-size: 0.8em; color: var(--text-muted); margin: 0 0 8px 0;">Rod and pulley diameters are set only from instrument measurements.</p>
+                
+                <div style="margin-top: 20px; border-top: 1px solid var(--border); padding-top: 15px;">
+                    <label style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span>Live Load M (kg):</span>
+                        <span id="load-display" style="color: var(--accent); font-weight: bold;">0.0 kg</span>
+                    </label>
+                    <div style="display: flex; gap: 10px;">
+                        <button id="rem-btn" onclick="updateSim('rem')">- 0.5 kg</button>
+                        <button id="add-btn" class="primary" onclick="updateSim('add')">+ 0.5 kg</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h2>Live Readings</h2>
+                <div style="font-family: monospace; line-height: 2;">
+                    <div>&theta;<sub>1</sub>: <span id="live-t1">0.00</span>°</div>
+                    <div>&theta;<sub>2</sub>: <span id="live-t2">0.00</span>°</div>
+                    <div style="font-weight: bold; color: var(--accent);">Twist &phi;: <span id="live-diff">0.00</span>°</div>
+                </div>
+                <button id="reset-btn" onclick="location.reload()" style="margin-top: auto;">Reset App</button>
+            </div>
+
+            <div class="panel" style="grid-column: 1 / 4;">
+                <h2 style="text-align: center;">Experimental Data Table</h2>
+                <table id="obs-table">
+                    <thead>
+                        <tr>
+                            <th rowspan="2">Sl no</th><th rowspan="2">Load (kg)</th>
+                            <th colspan="3">Load increasing</th><th colspan="3">Load decreasing</th>
+                            <th rowspan="2">&phi; = (&theta;<sub>1</sub>+&theta;<sub>2</sub>)/2</th>
+                        </tr>
+                        <tr>
+                            <th>&theta;'<sub>1</sub></th><th>&theta;''<sub>1</sub></th><th>&theta;<sub>1</sub></th>
+                            <th>&theta;'<sub>2</sub></th><th>&theta;''<sub>2</sub></th><th>&theta;<sub>2</sub></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <button id="plot-btn" class="primary" style="display: none; margin-top: 15px; width: 220px; align-self: center;" onclick="showPopupGraph()">View Graph & Analysis</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- GENERAL EXPERIMENT HELP MODAL -->
+<div id="help-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center;">
+    <div style="background: var(--bg-panel); padding: 20px; border-radius: 8px; width: 90%; max-width: 700px; max-height: 90vh; overflow-y: auto; border: 1px solid var(--border);">
+        <h3 style="display: flex; justify-content: space-between; margin-top: 0; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
+            Experiment Procedure Guide
+            <span style="cursor: pointer; color: var(--text-muted); font-size: 1.2em;" onclick="closeHelpModal()">&times;</span>
+        </h3>
+        <ol style="line-height: 1.8; margin-top: 20px; padding-left: 20px;">
+            <li><strong>Apparatus Setup:</strong> Navigate to the Experiment Simulation tab. You will see a rod fixed at the right end and attached to a pulley wheel at the left end.</li>
+            <li><strong>Set Parameters:</strong> In the Data Input & Control panel, select the material of the rod (Steel, Iron, or Copper) and specify the Pin Separation L.</li>
+            <li><strong>Measurements:</strong> Open the <strong>Measurements</strong> tab. Use the Screw Gauge and Vernier Caliper to measure rod diameter and pulley diameter (four readings each). Averaged values unlock the experiment and populate the simulation automatically.</li>
+            <li><strong>Initial Reading:</strong> Ensure the live load (M) is set to 0.0 kg to establish your zero-error state.</li>
+            <li><strong>Loading the Rod:</strong> Click the <strong>+ 0.5 kg</strong> button on the control panel to add weights in increments.</li>
+            <li><strong>Record Observations:</strong> As you add weight, the rod will twist. Observe the readings on Scale 1 (&theta;<sub>1</sub>) and Scale 2 (&theta;<sub>2</sub>) measured in degrees.</li>
+            <li><strong>Save Data:</strong> The simulation automatically logs the current load, angles, and twist difference into the observation table as you add or remove weights.</li>
+            <li><strong>Plot Graph:</strong> Continue adding weights up to the limit (or until you have at least 3 readings), then click "View Graph & Analysis". A graph of <em>Mean Deflection vs. Load</em> will plot automatically to verify Hooke's Law.</li>
+        </ol>
+        <div style="text-align: right; margin-top: 20px;">
+            <button class="primary" onclick="closeHelpModal()">Understood</button>
+        </div>
+    </div>
+</div>
+
+<!-- SPECIFIC INSTRUMENT HELP MODAL -->
+<div id="instrument-help-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2500; justify-content: center; align-items: center;">
+    <div style="background: var(--bg-panel); padding: 25px; border-radius: 8px; width: 90%; max-width: 600px; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+        <h3 id="inst-help-title" style="display: flex; justify-content: space-between; margin-top: 0; border-bottom: 1px solid var(--border); padding-bottom: 15px; color: var(--accent);">
+            How to read the instrument
+            <span style="cursor: pointer; color: var(--text-muted); font-size: 1.2em;" onclick="closeInstrumentHelp()">&times;</span>
+        </h3>
+        <div id="inst-help-content" style="line-height: 1.6; margin-top: 20px; font-size: 1.05em; color: var(--text-main);">
+            <!-- Content gets injected by JS here -->
+        </div>
+        <div style="text-align: right; margin-top: 25px;">
+            <button class="primary" onclick="closeInstrumentHelp()">Got it</button>
+        </div>
+    </div>
+</div>
+
+<!-- GRAPH MODAL -->
+<div id="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;">
+    <div style="background: var(--bg-panel); padding: 20px; border-radius: 8px; width: 90%; max-width: 850px; max-height: 90vh; overflow-y: auto; border: 1px solid var(--border);">
+        <h3 style="display: flex; justify-content: space-between; margin-top: 0;">
+            Load M (kg) vs Twist φ (°) Graph
+            <span style="cursor: pointer; color: var(--text-muted);" onclick="closeModal()">&times;</span>
+        </h3>
+        <canvas id="graph-canvas" height="90"></canvas>
+        
+        <div id="results-panel" style="margin-top: 20px; padding: 15px; background: var(--svg-bg); border-radius: 6px; border: 1px solid var(--border);">
+            <h3 style="margin-top: 0; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 10px;">Experiment Analysis</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1.3fr; gap: 20px; font-size: 1.05em;">
+                <div>
+                    <p><strong>Calculated Slope (φ/M):</strong> <span id="res-slope">0.000</span> °/kg</p>
+                    <p><strong>Experimental η:</strong> <span id="res-eta">0.00</span> dyne/cm&sup2;</p>
+                    <p><strong>Identified Material:</strong> <span id="res-mat" style="text-transform: capitalize; color: var(--accent); font-weight: bold;">-</span></p>
+                </div>
+                
+                <div style="background: var(--bg-panel); padding: 15px; border-radius: 4px; font-family: monospace; font-size: 0.85em; line-height: 1.5; border: 1px solid var(--border);">
+                    <strong style="color: #ff7b72; font-size: 1.1em;">Maximum Error Calculation:</strong><br>
+                    <span style="color: var(--text-muted);">(Assuming error in standard weights &Delta;M is negligible)</span>
+                    
+                    <div style="margin: 10px 0; padding: 10px; border-left: 2px solid var(--accent); background: var(--formula-bg); color: var(--text-main);">
+                        <strong>Variables Legend:</strong><br>
+                        • <strong>&Delta;L</strong>, <strong>&Delta;D</strong>, <strong>&Delta;d</strong>, <strong>&Delta;&phi;</strong> : Instrumental least counts (Max error)<br>
+                        • <strong>L</strong> : Working pin separation (cm)<br>
+                        • <strong>D</strong> : Diameter of the pulley wheel (cm)<br>
+                        • <strong>d</strong> : Diameter of the experimental rod (mm)<br>
+                        • <strong>&phi;</strong> : Maximum angle of twist measured (°)<br>
+                    </div>
+
+                    <div style="font-weight: bold; margin-bottom: 8px;">&Delta;&eta;/&eta; = &Delta;L/L + &Delta;D/D + 4(&Delta;d/d) + &Delta;&phi;/&phi;</div>
+                    
+                    &Delta;L/L = <span id="err-L">0.0000</span><br>
+                    &Delta;D/D = <span id="err-D">0.0000</span><br>
+                    4 * (&Delta;d/d) = <span id="err-d">0.0000</span><br>
+                    &Delta;&phi;/&phi; = <span id="err-phi">0.0000</span><br>
+                    -----------------------------------<br>
+                    <strong style="font-size: 1.1em;">Max Fractional Error = <span id="err-frac" style="color: var(--accent);">0.0000</span></strong><br>
+                    <strong style="font-size: 1.1em;">Max Percentage Error = <span id="err-pct" style="color: var(--accent);">0.00</span>%</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SMART TUTOR HINT MODAL -->
+<div id="smart-hint-modal" class="hint-overlay" style="display: none;">
+    <div class="hint-panel">
+        <div class="hint-header">
+            <span class="hint-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="9" y1="18" x2="15" y2="18"></line><line x1="10" y1="22" x2="14" y2="22"></line><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg></span>
+            <h3 style="margin: 0;">Let's review your reading...</h3>
+        </div>
+        <div class="hint-body">
+            <p id="hint-text">Your hint will appear here.</p>
+        </div>
+        <div class="hint-footer">
+            <button class="primary" onclick="closeSmartHint()">Got it, let me try again</button>
+        </div>
+    </div>
+</div>
+
+<!-- SITE FOOTER -->
+<footer style="margin-top: 40px; padding: 20px 0; text-align: center; color: var(--text-muted); font-size: 0.95em; width: 100%; border-top: 1px solid var(--border); letter-spacing: 0.5px;">
+    Designed & Developed by <strong>Kamalika Chakraborty</strong>, <strong>Rohit Chakravorty</strong>, and <strong>Soumik Bhuniya</strong>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="tools/measurementSession.js"></script>
+<script src="tools/screwGauge/screwGauge.js"></script>
+<script src="tools/vernierCaliper/vernier.js"></script>
+<script src="tools/measurementsController.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>

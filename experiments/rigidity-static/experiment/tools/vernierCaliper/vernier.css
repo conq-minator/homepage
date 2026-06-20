@@ -1,0 +1,167 @@
+.vernier-caliper-tool {
+    font-family: inherit;
+    color: var(--text-main);
+}
+
+.vernier-caliper-tool .vc-header {
+    margin-bottom: 16px;
+}
+
+.vernier-caliper-tool .vc-header h3 {
+    margin: 0 0 8px 0;
+    color: var(--accent);
+}
+
+.vernier-caliper-tool .vc-reading-badge {
+    display: inline-block;
+    background: var(--formula-bg);
+    border: 1px solid var(--border);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    color: var(--text-muted);
+}
+
+.vernier-caliper-tool .vc-instrument-wrap {
+    background: var(--svg-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    overflow-x: auto;
+}
+
+.vernier-caliper-tool .vc-svg {
+    display: block;
+    margin: 0 auto;
+    min-width: 320px;
+    max-width: 100%;
+}
+
+.vernier-caliper-tool .vc-highlight-msr {
+    filter: drop-shadow(0 0 8px var(--accent));
+}
+
+.vernier-caliper-tool .vc-highlight-vernier {
+    filter: drop-shadow(0 0 8px #f59e0b);
+}
+
+.vernier-caliper-tool .vc-history {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--border);
+}
+
+.vernier-caliper-tool .vc-history h4 {
+    margin: 0 0 12px 0;
+    font-size: 0.9em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.vernier-caliper-tool .vc-history-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.vernier-caliper-tool .vc-history-item {
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 0.85em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.vernier-caliper-tool .vc-history-item:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.vernier-caliper-tool .vc-history-item.active {
+    border-color: var(--accent);
+    background: rgba(14, 165, 233, 0.1);
+}
+
+.vernier-caliper-tool .vc-history-item span {
+    color: var(--text-muted);
+}
+
+.vernier-caliper-tool .vc-history-item strong {
+    color: var(--accent);
+}
+
+.vernier-caliper-tool .vc-guide-box {
+    background: var(--formula-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 16px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    line-height: 1.6;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+}
+
+.vernier-caliper-tool .vc-guide-box strong {
+    color: var(--accent);
+}
+
+.vernier-caliper-tool .vc-answer-reveal {
+    margin-top: 10px;
+    padding: 10px;
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-family: 'Courier New', monospace;
+}
+
+.vernier-caliper-tool .vc-input-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.vernier-caliper-tool .vc-field label {
+    display: block;
+    font-size: 0.85em;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+
+.vernier-caliper-tool .vc-field input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.vernier-caliper-tool .vc-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+
+.vernier-caliper-tool .vc-error {
+    color: #f87171;
+    font-size: 0.9em;
+    margin-top: 8px;
+}
+
+.vernier-caliper-tool .vc-complete-banner {
+    background: var(--formula-bg);
+    border: 1px solid var(--accent);
+    padding: 12px 16px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.vernier-caliper-tool.vc-locked {
+    opacity: 0.6;
+    pointer-events: none;
+}

@@ -110,7 +110,7 @@ export const experiments = [
     shortDesc: "Demonstrate quantization of energy levels in atoms.",
     icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-activity"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`,
     contributors: [
-      { name: "Meghnath Chatterjee", role: "Contributor", linkedin: "", portfolio: "" },
+      { name: "Meghadri Chatterjee", role: "Contributor", linkedin: "", portfolio: "" },
       { name: "Sayan Samanta", role: "Contributor", linkedin: "", portfolio: "" },
       { name: "Debraj Paul", role: "Contributor", linkedin: "", portfolio: "" }
     ]
@@ -134,6 +134,14 @@ export const experiments = [
     title: "Young's Double Slit Experiment (YDSE)",
     shortDesc: "Interference Lab to measure light wavelengths and slit separations.",
     icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-waves"><path d="M2 6c.6 0 1.2-.2 1.8-.6 1.2-.8 2.4-1.4 3.6-1.4s2.4.6 3.6 1.4c.6.4 1.2.6 1.8.6s1.2-.2 1.8-.6C15.8 4.6 17 4 18.2 4s2.4.6 3.6 1.4c.6.4 1.2.6 1.8.6"/><path d="M2 12c.6 0 1.2-.2 1.8-.6 1.2-.8 2.4-1.4 3.6-1.4s2.4.6 3.6 1.4c.6.4 1.2.6 1.8.6s1.2-.2 1.8-.6C15.8 10.6 17 10 18.2 10s2.4.6 3.6 1.4c.6.4 1.2.6 1.8.6"/><path d="M2 18c.6 0 1.2-.2 1.8-.6 1.2-.8 2.4-1.4 3.6-1.4s2.4.6 3.6 1.4c.6.4 1.2.6 1.8.6s1.2-.2 1.8-.6C15.8 16.6 17 16 18.2 16s2.4.6 3.6 1.4c.6.4 1.2.6 1.8.6"/></svg>`,
+    contributors: []
+  },
+  {
+    id: 10,
+    folder: "carey-foster",
+    title: "Determine the Unknown Resistance using Carey Foster Bridge",
+    shortDesc: "Measure the unknown resistance and specific resistance of a given wire using Carey Foster bridge.",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-activity"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>`,
     contributors: []
   }
 ];
