@@ -40,8 +40,8 @@ export const experiments = [
     shortDesc: "Study interference patterns to calculate the radius of curvature.",
     icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-target"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>`,
     contributors: [
-      { name: "Prashun Kumar Roy", role: "Contributor", linkedin: "", portfolio: "" },
-      { name: "Chandrajit Saha", role: "Contributor", linkedin: "", portfolio: "" }
+      { name: "Prashun Kumar Roy", role: "Contributor", linkedin: "https://www.linkedin.com/in/prashun-kumar-roy-a27907385/", portfolio: "" },
+      { name: "Chandrajit Saha", role: "Contributor", linkedin: "https://www.linkedin.com/in/chandrajitsaha", portfolio: "" }
     ]
   },
   {
@@ -62,9 +62,9 @@ export const experiments = [
     shortDesc: "Investigate torsional rigidity using the static torsion apparatus.",
     icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cylinder"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/></svg>`,
     contributors: [
-      { name: "Soumik Bhuniya", role: "Contributor", linkedin: "https://www.linkedin.com/in/soumik-bhuniya-9bba80393?utm_source=share_via&utm_content=profile&utm_medium=member_android", portfolio: "" },
-      { name: "Kamalika Chakraborty", role: "Contributor", linkedin: "", portfolio: "" },
-      { name: "Rohit Chakraborty", role: "Contributor", linkedin: "", portfolio: "" }
+      { name: "Soumik Bhuniya", role: "Contributor", linkedin: "https://www.linkedin.com/in/soumik-bhuniya-9bba80393/", portfolio: "" },
+      { name: "Kamalika Chakraborty", role: "Contributor", linkedin: "https://www.linkedin.com/in/kamalika-chakraborty-98902038a/", portfolio: "" },
+      { name: "Rohit Chakravorty", role: "Contributor", linkedin: "https://www.linkedin.com/in/rohit-chakravorty-8b947438b/", portfolio: "" }
     ]
   },
   {
@@ -74,9 +74,9 @@ export const experiments = [
     shortDesc: "Use a diffraction grating to calculate the wavelength of a laser.",
     icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>`,
     contributors: [
-      { name: "Animesh Adhikari", role: "Contributor", linkedin: "", portfolio: "" },
-      { name: "Ankansubho Dutta", role: "Contributor", linkedin: "", portfolio: "" },
-      { name: "Subhasis Roy", role: "Contributor", linkedin: "", portfolio: "" }
+      { name: "Animesh Adhikari", role: "Contributor", linkedin: "https://www.linkedin.com/in/animesh-adhikari-803755379?utm_source=share_via&utm_content=profile&utm_medium=member_android", portfolio: "" },
+      { name: "Ankansubhro Dutta", role: "Contributor", linkedin: "https://www.linkedin.com/in/ankansubhro-dutta-39053138a?utm_source=share_via&utm_content=profile&utm_medium=member_android", portfolio: "" },
+      { name: "Subhasis Roy", role: "Contributor", linkedin: "https://www.linkedin.com/in/subhasis-roy-645ba138a?utm_source=share_via&utm_content=profile&utm_medium=member_android", portfolio: "" }
     ]
   },
   {
@@ -86,7 +86,7 @@ export const experiments = [
     shortDesc: "Analyze the V-I characteristics and power output of a solar cell.",
     icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-battery-charging"><path d="M15 7h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2"/><path d="M6 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h1"/><path d="m11 7-3 5h4l-3 5"/><line x1="22" x2="22" y1="11" y2="13"/></svg>`,
     contributors: [
-      { name: "Ujaan Mukherjee", role: "Contributor", linkedin: "", portfolio: "" }
+      { name: "Ujaan Mukherjee", role: "Contributor", linkedin: "https://www.linkedin.com/in/um007/", portfolio: "" }
     ]
   },
   {
@@ -110,9 +110,9 @@ export const experiments = [
     shortDesc: "Demonstrate quantization of energy levels in atoms.",
     icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-activity"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`,
     contributors: [
-      { name: "Meghadri Chatterjee", role: "Contributor", linkedin: "", portfolio: "" },
-      { name: "Sayan Samanta", role: "Contributor", linkedin: "", portfolio: "" },
-      { name: "Debraj Paul", role: "Contributor", linkedin: "", portfolio: "" }
+      { name: "Meghadri Chatterjee", role: "Contributor", linkedin: "https://www.linkedin.com/in/meghadri-chatterjee-20351a368?utm_source=share_via&utm_content=profile&utm_medium=member_android", portfolio: "" },
+      { name: "Sayan Samanta", role: "Contributor", linkedin: "https://www.linkedin.com/in/sayan-samanta-60686a373?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app", portfolio: "" },
+      { name: "Debraj Paul", role: "Contributor", linkedin: "https://www.linkedin.com/in/debraj-paul-6421ba293?utm_source=share_via&utm_content=profile&utm_medium=member_android", portfolio: "" }
     ]
   },
   {
@@ -122,10 +122,10 @@ export const experiments = [
     shortDesc: "Use a torsional pendulum to find the modulus of rigidity dynamically.",
     icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-move-vertical"><path d="M12 2v20"/><path d="m8 18 4 4 4-4"/><path d="m8 6 4-4 4 4"/></svg>`,
     contributors: [
-      { name: "Koyel Bandyopadhyay", role: "Contributor", linkedin: "", portfolio: "" },
-      { name: "Sattwik Modak", role: "Contributor", linkedin: "", portfolio: "" },
-      { name: "Ashmit Bhadra", role: "Contributor", linkedin: "", portfolio: "" },
-      { name: "Sangita Kanta", role: "Contributor", linkedin: "", portfolio: "" }
+      { name: "Koyel Bandyopadhyay", role: "Contributor", linkedin: "https://in.linkedin.com/in/koyel-bandyopadhyay25", portfolio: "" },
+      { name: "Sattwik Modak", role: "Contributor", linkedin: "https://www.linkedin.com/in/sattwik-mx-34329735b?utm_source=share_via&utm_content=profile&utm_medium=member_android", portfolio: "" },
+      { name: "Ashmit Bhadra", role: "Contributor", linkedin: "https://www.linkedin.com/in/ashmit-bhadra-020044383/", portfolio: "" },
+      { name: "Sangita Kanta", role: "Contributor", linkedin: "https://www.linkedin.com/in/sangita-kanta-1647392b1", portfolio: "" }
     ]
   },
   {
