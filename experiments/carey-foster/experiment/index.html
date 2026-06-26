@@ -1,1 +1,888 @@
-<!DOCTYPE html><html lang='en'><head><meta charset='UTF-8'><title>Carey Foster Experiment</title></head><body><h1>Carey Foster Experiment Simulation</h1></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta name="description" content="Virtual Lab: Carey Foster Bridge — Determine the resistance per unit length of a bridge wire and measure unknown low resistances using the Carey Foster method. Interactive simulation with data tables and calculations.">
+  <title>Carey Foster Bridge Virtual Lab — Resistance Measurement</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="iifr-logo.ico" type="image/x-icon">
+</head>
+<body>
+
+  <!-- Background Effects -->
+  <div class="bg-grid"></div>
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+  <div class="bg-glow bg-glow-3"></div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Header -->
+  <header class="lab-header">
+    <div class="header-left">
+      <img src="iem-logo.webp" alt="IEM Logo" class="header-logo">
+      <img src="iifr-logo.ico" alt="IIFR Logo" class="header-logo">
+      <div class="header-title-wrapper">
+        <h1>Carey Foster Bridge Experiment</h1>
+        <p>Interactive Virtual Physics Laboratory</p>
+      </div>
+    </div>
+    <div class="header-right">
+      <span class="header-subject">Physics — Electricity</span>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
+        <span class="theme-icon" id="themeIcon">🌙</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Tabbed Navbar -->
+  <div class="custom-navbar-container">
+    <div class="custom-navbar">
+      <button class="custom-nav-item active" data-tab="theory">Theory</button>
+      <button class="custom-nav-item" data-tab="apparatus">Apparatus</button>
+      <button class="custom-nav-item" data-tab="experiment">Experiment</button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main>
+
+    <!-- ==================== THEORY PAGE ==================== -->
+    <div id="page-theory" class="tab-page active-page">
+
+      <!-- Theory Section -->
+      <section class="section" id="theory">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-label">Module 01</span>
+            <h2 class="section-title">Theory & Background</h2>
+            <p class="section-subtitle">Understanding the principles of the Carey Foster Bridge for precision resistance measurement</p>
+          </div>
+
+          <div class="card" style="margin-bottom: 32px;">
+            <div class="theory-grid">
+              <div class="theory-text">
+                <h3>📌 Objective</h3>
+                <p>
+                  <strong>Part 1:</strong> To determine the resistance per unit length (ρ) of the Carey Foster bridge wire.
+                </p>
+                <p>
+                  <strong>Part 2:</strong> To find the value of an unknown low resistance (Y) using the Carey Foster bridge.
+                </p>
+
+                <h3 style="margin-top: 24px;">📖 Theory</h3>
+                <p>
+                  The Carey Foster Bridge is a modified form of the Wheatstone Bridge, specifically designed for comparing
+                  two nearly equal resistances. It consists of a uniform wire of length 100 cm stretched along a meter scale,
+                  with four gaps. Two outer gaps contain known equal resistances P and Q (ratio arms), while the inner two gaps
+                  contain a known fractional resistance X and the unknown resistance Y.
+                </p>
+                <p>
+                  A galvanometer is connected between the midpoint of the circuit and a sliding contact (jockey) that can
+                  be moved along the bridge wire. The balance condition is found when the galvanometer shows null deflection.
+                </p>
+                <p>
+                  At balance, if the jockey is at a distance <em>l</em> from one end:
+                </p>
+                <p style="margin-top: 8px;">
+                  After interchanging X and Y (swapping their positions) and finding the new balance length, we can eliminate
+                  the end resistances and derive the working formulas shown to the right.
+                </p>
+              </div>
+              <div class="theory-visual">
+                <div class="formula-box">
+                  <div class="formula">ρ = X / (l₂ − l₁)</div>
+                  <div class="formula-desc">
+                    Part 1: Resistance per unit length of bridge wire (when Y = 0, short-circuited)
+                  </div>
+                </div>
+
+                <div class="formula-box" style="margin-top: 12px;">
+                  <div class="formula">Y = X − (l₂' − l₁') × ρ</div>
+                  <div class="formula-desc">
+                    Part 2: Unknown low resistance (when Y is connected)
+                  </div>
+                </div>
+
+                <div class="variable-list">
+                  <div class="variable-item">
+                    <span class="variable-symbol">X</span>
+                    <span class="variable-desc">Known fractional resistance (Ω)</span>
+                  </div>
+                  <div class="variable-item">
+                    <span class="variable-symbol">Y</span>
+                    <span class="variable-desc">Unknown low resistance (Ω)</span>
+                  </div>
+                  <div class="variable-item">
+                    <span class="variable-symbol">l₁</span>
+                    <span class="variable-desc">Balance length before swap</span>
+                  </div>
+                  <div class="variable-item">
+                    <span class="variable-symbol">l₂</span>
+                    <span class="variable-desc">Balance length after swap</span>
+                  </div>
+                  <div class="variable-item">
+                    <span class="variable-symbol">ρ</span>
+                    <span class="variable-desc">Resistance per unit length (Ω/cm)</span>
+                  </div>
+                  <div class="variable-item">
+                    <span class="variable-symbol">P, Q</span>
+                    <span class="variable-desc">Equal ratio arms</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Diagram -->
+          <div class="card">
+            <h3 style="font-family: var(--font-display); font-size: 14px; color: var(--text-heading); letter-spacing: 1px; margin-bottom: 20px;">
+              📐 CIRCUIT DIAGRAM — CAREY FOSTER BRIDGE
+            </h3>
+            <div class="diagram-wrapper">
+              <canvas id="diagramCanvas"></canvas>
+            </div>
+            <p style="text-align: center; font-size: 13px; color: var(--text-muted); margin-top: 12px;">
+              Fig 1: Wheatstone Bridge arrangement showing P, Q (ratio arms), X (known resistance), Y (unknown resistance), galvanometer (G), and the bridge wire with jockey
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Procedure Section -->
+      <section class="section" id="procedure" style="background: rgba(255,255,255,0.01);">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-label">Module 02</span>
+            <h2 class="section-title">Procedure</h2>
+            <p class="section-subtitle">Follow these steps carefully to perform the experiment</p>
+          </div>
+
+          <div class="procedure-steps">
+            <div class="procedure-step animate-in">
+              <div class="step-number">1</div>
+              <div class="step-text">
+                Draw the circuit diagram of the Carey Foster bridge. Connect the <strong>fractional resistance box X</strong> in one inner gap and <strong>short-circuit the other gap</strong> (Y = 0) using a copper strip.
+              </div>
+            </div>
+            <div class="procedure-step animate-in">
+              <div class="step-number">2</div>
+              <div class="step-text">
+                Connect equal resistances <strong>P and Q</strong> in the outer gaps (ratio arms). These should remain constant throughout the experiment.
+              </div>
+            </div>
+            <div class="procedure-step animate-in">
+              <div class="step-number">3</div>
+              <div class="step-text">
+                Introduce a known resistance X (say 0.5 Ω) in the resistance box. <strong>Slide the jockey</strong> along the bridge wire to find the null point (zero galvanometer deflection). Record balance length <strong>l₁</strong>.
+              </div>
+            </div>
+            <div class="procedure-step animate-in">
+              <div class="step-number">4</div>
+              <div class="step-text">
+                <strong>Interchange (swap) the positions</strong> of X and the short-circuit wire. Again find the balance point and record the new balance length <strong>l₂</strong>.
+              </div>
+            </div>
+            <div class="procedure-step animate-in">
+              <div class="step-number">5</div>
+              <div class="step-text">
+                Repeat steps 3–4 for different values of X (e.g., 0.5, 1.0, 1.5, 2.0, 2.5 Ω). Calculate <strong>ρ = X / (l₂ − l₁)</strong> for each. Find the <strong>mean value of ρ</strong>.
+              </div>
+            </div>
+            <div class="procedure-step animate-in">
+              <div class="step-number">6</div>
+              <div class="step-text">
+                For Part 2, replace the short-circuit wire with the <strong>unknown resistance Y</strong>.
+              </div>
+            </div>
+            <div class="procedure-step animate-in">
+              <div class="step-number">7</div>
+              <div class="step-text">
+                With a known X in the resistance box, find the balance length <strong>l₁'</strong>. Then <strong>swap X and Y</strong> and find the new balance length <strong>l₂'</strong>.
+              </div>
+            </div>
+            <div class="procedure-step animate-in">
+              <div class="step-number">8</div>
+              <div class="step-text">
+                Repeat for different X values and calculate <strong>Y = X − (l₂' − l₁') × ρ</strong> for each observation. Compute the <strong>mean value of Y</strong>.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== APPARATUS PAGE ==================== -->
+    <div id="page-apparatus" class="tab-page">
+      <section class="section">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-label">Module 02</span>
+            <h2 class="section-title">Apparatus Required</h2>
+            <p class="section-subtitle">The electrical instruments and components used in this experiment</p>
+          </div>
+
+          <div class="apparatus-showcase">
+            <!-- Card 1: Carey Foster Bridge -->
+            <div class="apparatus-card">
+              <div class="apparatus-card-header">
+                <div class="apparatus-card-icon">🔌</div>
+                <div class="apparatus-card-title">
+                  <h3>Carey Foster Bridge</h3>
+                  <span>Primary Instrument</span>
+                </div>
+              </div>
+              <div class="apparatus-card-body">
+                <p>A metre bridge with four gaps. A uniform resistance wire (manganin/constantan) is stretched along a 100 cm scale. Two outer gaps hold ratio arms (P, Q) and two inner gaps hold the resistances being compared (X, Y).</p>
+              </div>
+              <div class="apparatus-specs">
+                <div class="spec-item">
+                  <span class="spec-label">Wire Length</span>
+                  <span class="spec-value">100 cm</span>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-label">Wire Material</span>
+                  <span class="spec-value">Manganin / Constantan</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 2: Fractional Resistance Box -->
+            <div class="apparatus-card">
+              <div class="apparatus-card-header">
+                <div class="apparatus-card-icon">🎛️</div>
+                <div class="apparatus-card-title">
+                  <h3>Fractional Resistance Box</h3>
+                  <span>Known Resistance Source</span>
+                </div>
+              </div>
+              <div class="apparatus-card-body">
+                <p>A precision decade resistance box providing fractional ohm values (0.1 to 5 Ω in 0.1 Ω steps). It allows setting known resistance values of X for each observation.</p>
+              </div>
+              <div class="apparatus-specs">
+                <div class="spec-item">
+                  <span class="spec-label">Range</span>
+                  <span class="spec-value">0.1 — 5.0 Ω</span>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-label">Least Count</span>
+                  <span class="spec-value">0.1 Ω</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3: Galvanometer -->
+            <div class="apparatus-card">
+              <div class="apparatus-card-header">
+                <div class="apparatus-card-icon">🧭</div>
+                <div class="apparatus-card-title">
+                  <h3>Galvanometer</h3>
+                  <span>Null Detector</span>
+                </div>
+              </div>
+              <div class="apparatus-card-body">
+                <p>A sensitive current-detecting instrument connected between the midpoint of the circuit (junction of P and Q) and the jockey on the bridge wire. It indicates the balance (null) condition by showing zero deflection.</p>
+              </div>
+              <div class="apparatus-specs">
+                <div class="spec-item">
+                  <span class="spec-label">Sensitivity</span>
+                  <span class="spec-value">High (µA range)</span>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-label">Type</span>
+                  <span class="spec-value">Moving Coil</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 4: Jockey -->
+            <div class="apparatus-card">
+              <div class="apparatus-card-header">
+                <div class="apparatus-card-icon">📏</div>
+                <div class="apparatus-card-title">
+                  <h3>Jockey</h3>
+                  <span>Sliding Contact</span>
+                </div>
+              </div>
+              <div class="apparatus-card-body">
+                <p>A sliding contact that is moved gently along the bridge wire to locate the balance point. It has a sharp knife-edge for precise contact and is connected to the galvanometer via a flexible lead wire.</p>
+              </div>
+              <div class="apparatus-specs">
+                <div class="spec-item">
+                  <span class="spec-label">Contact</span>
+                  <span class="spec-value">Knife Edge</span>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-label">Precision</span>
+                  <span class="spec-value">±0.1 cm</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 5: Leclanche Cell -->
+            <div class="apparatus-card">
+              <div class="apparatus-card-header">
+                <div class="apparatus-card-icon">🔋</div>
+                <div class="apparatus-card-title">
+                  <h3>Battery / Cell</h3>
+                  <span>EMF Source</span>
+                </div>
+              </div>
+              <div class="apparatus-card-body">
+                <p>A Leclanché cell or a battery providing a steady EMF to drive current through the Wheatstone bridge circuit. A key switch is used for connecting and disconnecting the cell.</p>
+              </div>
+              <div class="apparatus-specs">
+                <div class="spec-item">
+                  <span class="spec-label">EMF</span>
+                  <span class="spec-value">1.5 V (typical)</span>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-label">Switch</span>
+                  <span class="spec-value">Plug Key</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 6: Connecting Wires -->
+            <div class="apparatus-card">
+              <div class="apparatus-card-header">
+                <div class="apparatus-card-icon">🔗</div>
+                <div class="apparatus-card-title">
+                  <h3>Connecting Wires & Copper Strip</h3>
+                  <span>Accessories</span>
+                </div>
+              </div>
+              <div class="apparatus-card-body">
+                <p>Thick copper connecting wires for making circuit connections, and a heavy copper strip used to short-circuit one of the inner gaps (Y = 0) during Part 1 of the experiment.</p>
+              </div>
+              <div class="apparatus-specs">
+                <div class="spec-item">
+                  <span class="spec-label">Material</span>
+                  <span class="spec-value">Copper (Low R)</span>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-label">Strip Resistance</span>
+                  <span class="spec-value">≈ 0 Ω</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== EXPERIMENT PAGE ==================== -->
+    <div id="page-experiment" class="tab-page">
+
+      <!-- Simulation Section -->
+      <section class="section" id="simulation">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-label">Module 03</span>
+            <h2 class="section-title">Interactive Simulator</h2>
+            <p class="section-subtitle">Perform the experiment virtually — adjust parameters and observe the bridge in action</p>
+          </div>
+
+          <div class="simulation-container">
+            <!-- Info Box -->
+            <div class="info-box">
+              <span class="info-icon">ℹ️</span>
+              <span>Switch on the battery, set resistance X, and drag the jockey along the wire to find the null point. Click "Record Reading" to save data. Use the swap toggle to interchange X and Y positions. <strong>Part 1</strong> measures ρ (Y=0), <strong>Part 2</strong> finds unknown Y.</span>
+            </div>
+
+            <!-- Two-column experiment layout -->
+            <div class="sim-grid">
+
+              <!-- LEFT: Controls & Readings -->
+              <div class="sim-sidebar">
+
+                <!-- Part Selection -->
+                <div class="sim-control-group">
+                  <h4>🔬 Experiment Part</h4>
+                  <div class="part-toggle-wrapper">
+                    <button class="part-toggle-btn active" id="btnPart1" onclick="selectPart(1)">Part 1 — Find ρ</button>
+                    <button class="part-toggle-btn" id="btnPart2" onclick="selectPart(2)">Part 2 — Find Y</button>
+                  </div>
+                  <p style="font-size:0.75rem; color:var(--text-muted); margin-top:10px;" id="partDescription">
+                    Y is short-circuited (Y = 0). Determine resistance per unit length of the bridge wire.
+                  </p>
+                </div>
+
+                <!-- Circuit Controls -->
+                <div class="sim-control-group">
+                  <h4>⚡ Circuit Controls</h4>
+                  <div class="control-actions">
+                    <button class="btn btn-primary btn-sm" id="btnBattery" onclick="toggleBattery()">
+                      🔋 Turn ON Battery
+                    </button>
+                    <div class="status-row">
+                      <div class="status-indicator status-off" id="batteryStatus">
+                        <span class="status-dot"></span> Battery OFF
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Swap Toggle -->
+                  <div class="swap-toggle" onclick="toggleSwap()">
+                    <div class="swap-toggle-track" id="swapTrack">
+                      <div class="swap-toggle-thumb"></div>
+                    </div>
+                    <span class="swap-toggle-label" id="swapLabel">Normal: X in left gap, Y in right gap</span>
+                  </div>
+                </div>
+
+                <!-- Resistance X Control -->
+                <div class="sim-control-group">
+                  <h4>🎛️ Resistance Box (X)</h4>
+                  <div class="control-row">
+                    <span class="control-label">Resistance X</span>
+                    <span class="control-value" id="resistanceXDisplay">0.5 Ω</span>
+                  </div>
+                  <input type="range" id="resistanceXSlider" min="0.1" max="5.0" value="0.5" step="0.1" oninput="updateResistanceX(this.value)">
+                  <div class="slider-labels">
+                    <span>0.1 Ω</span>
+                    <span>2.5 Ω</span>
+                    <span>5.0 Ω</span>
+                  </div>
+                </div>
+
+                <!-- Jockey Position -->
+                <div class="sim-control-group">
+                  <h4>📏 Jockey Position</h4>
+                  <div class="control-row">
+                    <span class="control-label">Position on wire</span>
+                    <span class="control-value" id="jockeyPositionDisplay">50.0 cm</span>
+                  </div>
+                  <input type="range" id="jockeySlider" min="0" max="100" value="50" step="0.1" oninput="moveJockey(this.value)">
+                  <div class="slider-labels">
+                    <span>0 cm</span>
+                    <span>50 cm</span>
+                    <span>100 cm</span>
+                  </div>
+                </div>
+
+                <!-- Galvanometer Readout -->
+                <div class="galvanometer-display">
+                  <div class="galvanometer-label">Galvanometer Deflection</div>
+                  <div class="galvanometer-value deflected" id="galvDeflection">0.00</div>
+                  <div style="font-size:0.7rem; color:var(--text-muted); margin-top:6px;">µA (zero = null point found)</div>
+                </div>
+
+                <!-- Record Button -->
+                <button class="btn btn-success btn-sm record-btn" onclick="recordReading()" style="width:100%;">
+                  📝 Record Reading at Null Point
+                </button>
+
+              </div>
+
+              <!-- RIGHT: Canvases & Live Measurements -->
+              <div class="sim-visuals">
+                <div class="sim-canvas-wrapper">
+                  <div class="canvas-label">Carey Foster Bridge — Top View</div>
+                  <canvas id="simCanvas"></canvas>
+                </div>
+
+                <!-- Live Measurement Strip -->
+                <div class="measurement-panel" id="measurementPanel">
+                  <div class="measurement-item">
+                    <div class="m-label">Jockey Position</div>
+                    <div class="m-value" id="livePosition">50.0<span class="m-unit"> cm</span></div>
+                  </div>
+                  <div class="measurement-item">
+                    <div class="m-label">Resistance X</div>
+                    <div class="m-value" id="liveResX">0.5<span class="m-unit"> Ω</span></div>
+                  </div>
+                  <div class="measurement-item">
+                    <div class="m-label">Galvanometer</div>
+                    <div class="m-value" id="liveGalv">0.00<span class="m-unit"> µA</span></div>
+                  </div>
+                  <div class="measurement-item">
+                    <div class="m-label">Balance Point</div>
+                    <div class="m-value" id="liveBalance">—</div>
+                  </div>
+                </div>
+
+                <div class="sim-canvas-wrapper">
+                  <div class="canvas-label">Galvanometer — Needle Deflection</div>
+                  <canvas id="galvCanvas"></canvas>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Observation Tables Section -->
+      <section class="section" id="observation" style="background: rgba(255,255,255,0.01);">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-label">Module 04</span>
+            <h2 class="section-title">Observation Tables</h2>
+            <p class="section-subtitle">Record and calculate your measurements from the experiment</p>
+          </div>
+
+          <!-- Table 1: Finding ρ -->
+          <div class="table-container">
+            <div class="table-title">📋 Table 1 — Determination of Resistance Per Unit Length (ρ) [Y = 0]</div>
+            <div style="overflow-x:auto;">
+              <table class="data-table" id="table1">
+                <thead>
+                  <tr>
+                    <th>Sl.<br>No.</th>
+                    <th>X<br>(Ω)</th>
+                    <th>Balance Length l₁<br>(before swap) cm</th>
+                    <th>Balance Length l₂<br>(after swap) cm</th>
+                    <th>(l₂ − l₁)<br>cm</th>
+                    <th>ρ = X/(l₂ − l₁)<br>(Ω/cm)</th>
+                  </tr>
+                </thead>
+                <tbody id="table1Body">
+                  <tr>
+                    <td class="order-label">1</td>
+                    <td><input type="number" step="0.01" id="t1_1_x" placeholder="—"></td>
+                    <td><input type="number" step="0.01" id="t1_1_l1" placeholder="—"></td>
+                    <td><input type="number" step="0.01" id="t1_1_l2" placeholder="—"></td>
+                    <td class="computed" id="t1_1_diff">—</td>
+                    <td class="computed" id="t1_1_rho">—</td>
+                  </tr>
+                  <tr>
+                    <td class="order-label">2</td>
+                    <td><input type="number" step="0.01" id="t1_2_x" placeholder="—"></td>
+                    <td><input type="number" step="0.01" id="t1_2_l1" placeholder="—"></td>
+                    <td><input type="number" step="0.01" id="t1_2_l2" placeholder="—"></td>
+                    <td class="computed" id="t1_2_diff">—</td>
+                    <td class="computed" id="t1_2_rho">—</td>
+                  </tr>
+                  <tr>
+                    <td class="order-label">3</td>
+                    <td><input type="number" step="0.01" id="t1_3_x" placeholder="—"></td>
+                    <td><input type="number" step="0.01" id="t1_3_l1" placeholder="—"></td>
+                    <td><input type="number" step="0.01" id="t1_3_l2" placeholder="—"></td>
+                    <td class="computed" id="t1_3_diff">—</td>
+                    <td class="computed" id="t1_3_rho">—</td>
+                  </tr>
+                  <tr>
+                    <td class="order-label">4</td>
+                    <td><input type="number" step="0.01" id="t1_4_x" placeholder="—"></td>
+                    <td><input type="number" step="0.01" id="t1_4_l1" placeholder="—"></td>
+                    <td><input type="number" step="0.01" id="t1_4_l2" placeholder="—"></td>
+                    <td class="computed" id="t1_4_diff">—</td>
+                    <td class="computed" id="t1_4_rho">—</td>
+                  </tr>
+                  <tr>
+                    <td class="order-label">5</td>
+                    <td><input type="number" step="0.01" id="t1_5_x" placeholder="—"></td>
+                    <td><input type="number" step="0.01" id="t1_5_l1" placeholder="—"></td>
+                    <td><input type="number" step="0.01" id="t1_5_l2" placeholder="—"></td>
+                    <td class="computed" id="t1_5_diff">—</td>
+                    <td class="computed" id="t1_5_rho">—</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 12px; justify-content: center; margin-bottom: 40px; flex-wrap: wrap;">
+            <button class="btn btn-primary btn-sm" onclick="calculateRho()">
+              🧮 Calculate ρ
+            </button>
+            <button class="btn btn-secondary btn-sm" onclick="clearTable('table1')">
+              🗑️ Clear Table 1
+            </button>
+          </div>
+
+          <!-- Mean ρ Result -->
+          <div class="results-grid" style="margin-bottom:40px;">
+            <div class="result-card highlight" style="grid-column: 1 / -1; max-width: 400px; margin: 0 auto;">
+              <div class="result-label">Mean ρ (Resistance per unit length)</div>
+              <div class="result-value" id="res_mean_rho">—</div>
+              <div class="result-unit">Ω / cm</div>
+            </div>
+          </div>
+
+          <!-- Table 2: Finding Y -->
+          <div class="table-container">
+            <div class="table-title">📋 Table 2 — Determination of Unknown Resistance Y (using mean ρ)</div>
+            <div style="overflow-x:auto;">
+              <table class="data-table" id="table2">
+                <thead>
+                  <tr>
+                    <th>Sl.<br>No.</th>
+                    <th>X<br>(Ω)</th>
+                    <th>Balance Length l₁'<br>(before swap) cm</th>
+                    <th>Balance Length l₂'<br>(after swap) cm</th>
+                    <th>(l₂' − l₁')<br>cm</th>
+                    <th>Y = X − (l₂'−l₁')ρ<br>(Ω)</th>
+                  </tr>
+                </thead>
+                <tbody id="table2Body">
+                  <tr>
+                    <td class="order-label">1</td>
+                    <td><input type="number" step="0.01" id="t2_1_x" placeholder="—"></td>
+                    <td><input type="number" step="0.01" id="t2_1_l1" placeholder="—"></td>
+                    <td><input type="number" step="0.01" id="t2_1_l2" placeholder="—"></td>
+                    <td class="computed" id="t2_1_diff">—</td>
+                    <td class="computed" id="t2_1_y">—</td>
+                  </tr>
+                  <tr>
+                    <td class="order-label">2</td>
+                    <td><input type="number" step="0.01" id="t2_2_x" placeholder="—"></td>
+                    <td><input type="number" step="0.01" id="t2_2_l1" placeholder="—"></td>
+                    <td><input type="number" step="0.01" id="t2_2_l2" placeholder="—"></td>
+                    <td class="computed" id="t2_2_diff">—</td>
+                    <td class="computed" id="t2_2_y">—</td>
+                  </tr>
+                  <tr>
+                    <td class="order-label">3</td>
+                    <td><input type="number" step="0.01" id="t2_3_x" placeholder="—"></td>
+                    <td><input type="number" step="0.01" id="t2_3_l1" placeholder="—"></td>
+                    <td><input type="number" step="0.01" id="t2_3_l2" placeholder="—"></td>
+                    <td class="computed" id="t2_3_diff">—</td>
+                    <td class="computed" id="t2_3_y">—</td>
+                  </tr>
+                  <tr>
+                    <td class="order-label">4</td>
+                    <td><input type="number" step="0.01" id="t2_4_x" placeholder="—"></td>
+                    <td><input type="number" step="0.01" id="t2_4_l1" placeholder="—"></td>
+                    <td><input type="number" step="0.01" id="t2_4_l2" placeholder="—"></td>
+                    <td class="computed" id="t2_4_diff">—</td>
+                    <td class="computed" id="t2_4_y">—</td>
+                  </tr>
+                  <tr>
+                    <td class="order-label">5</td>
+                    <td><input type="number" step="0.01" id="t2_5_x" placeholder="—"></td>
+                    <td><input type="number" step="0.01" id="t2_5_l1" placeholder="—"></td>
+                    <td><input type="number" step="0.01" id="t2_5_l2" placeholder="—"></td>
+                    <td class="computed" id="t2_5_diff">—</td>
+                    <td class="computed" id="t2_5_y">—</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+            <button class="btn btn-primary btn-sm" onclick="calculateY()">
+              🧮 Calculate Y
+            </button>
+            <button class="btn btn-secondary btn-sm" onclick="clearTable('table2')">
+              🗑️ Clear Table 2
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Results Section -->
+      <section class="section" id="results">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-label">Module 05</span>
+            <h2 class="section-title">Results & Analysis</h2>
+            <p class="section-subtitle">Final computed values and error analysis</p>
+          </div>
+
+          <div class="results-grid">
+            <div class="result-card">
+              <div class="result-label">Mean ρ</div>
+              <div class="result-value" id="final_rho">—</div>
+              <div class="result-unit">Ω / cm</div>
+            </div>
+            <div class="result-card highlight">
+              <div class="result-label">Mean Y (Unknown Resistance)</div>
+              <div class="result-value" id="final_Y">—</div>
+              <div class="result-unit">Ohms (Ω)</div>
+            </div>
+            <div class="result-card">
+              <div class="result-label">Actual Y (Reference)</div>
+              <div class="result-value" id="final_Y_actual">—</div>
+              <div class="result-unit">Ohms (Ω)</div>
+            </div>
+            <div class="result-card">
+              <div class="result-label">% Error</div>
+              <div class="result-value" id="final_error">—</div>
+              <div class="result-unit">percent</div>
+            </div>
+          </div>
+
+          <!-- Precautions -->
+          <div class="error-analysis" style="margin-top:28px;">
+            <h3>⚠️ Precautions</h3>
+            <div class="procedure-steps" style="margin-top:16px;">
+              <div class="procedure-step">
+                <div class="step-number">!</div>
+                <div class="step-text">All connections should be <strong>clean and tight</strong>. Loose contacts introduce parasitic resistance.</div>
+              </div>
+              <div class="procedure-step">
+                <div class="step-number">!</div>
+                <div class="step-text">The jockey should be <strong>pressed gently</strong> on the wire — do not scrape or drag it harshly, as this can damage the wire and change its cross-section.</div>
+              </div>
+              <div class="procedure-step">
+                <div class="step-number">!</div>
+                <div class="step-text">The <strong>battery key should be closed only while taking readings</strong> to avoid heating of the bridge wire.</div>
+              </div>
+              <div class="procedure-step">
+                <div class="step-number">!</div>
+                <div class="step-text">The balance point should ideally lie between <strong>30 cm and 70 cm</strong> for maximum sensitivity.</div>
+              </div>
+              <div class="procedure-step">
+                <div class="step-number">!</div>
+                <div class="step-text">The ratio arms P and Q should be <strong>equal and constant</strong> throughout the experiment.</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Quiz Section -->
+      <section class="section" id="quiz" style="background: rgba(255,255,255,0.01);">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-label">Module 06</span>
+            <h2 class="section-title">Self Evaluation</h2>
+            <p class="section-subtitle">Test your understanding with these viva voce questions</p>
+          </div>
+
+          <div class="quiz-container">
+            <!-- Q1 -->
+            <div class="quiz-item" id="q1">
+              <div class="quiz-question">
+                <span class="quiz-number">Q1.</span>
+                <span>What is the Carey Foster Bridge a modification of?</span>
+              </div>
+              <div class="quiz-options">
+                <label class="quiz-option" onclick="selectOption('q1', 0)">
+                  <span class="quiz-radio"></span> Kelvin Double Bridge
+                </label>
+                <label class="quiz-option" onclick="selectOption('q1', 1)">
+                  <span class="quiz-radio"></span> Wheatstone Bridge
+                </label>
+                <label class="quiz-option" onclick="selectOption('q1', 2)">
+                  <span class="quiz-radio"></span> Maxwell Bridge
+                </label>
+                <label class="quiz-option" onclick="selectOption('q1', 3)">
+                  <span class="quiz-radio"></span> Wien Bridge
+                </label>
+              </div>
+            </div>
+
+            <!-- Q2 -->
+            <div class="quiz-item" id="q2">
+              <div class="quiz-question">
+                <span class="quiz-number">Q2.</span>
+                <span>Why are the positions of X and Y interchanged during the experiment?</span>
+              </div>
+              <div class="quiz-options">
+                <label class="quiz-option" onclick="selectOption('q2', 0)">
+                  <span class="quiz-radio"></span> To increase measurement speed
+                </label>
+                <label class="quiz-option" onclick="selectOption('q2', 1)">
+                  <span class="quiz-radio"></span> To eliminate end resistances of the bridge wire
+                </label>
+                <label class="quiz-option" onclick="selectOption('q2', 2)">
+                  <span class="quiz-radio"></span> To check the galvanometer sensitivity
+                </label>
+                <label class="quiz-option" onclick="selectOption('q2', 3)">
+                  <span class="quiz-radio"></span> To verify Ohm's law
+                </label>
+              </div>
+            </div>
+
+            <!-- Q3 -->
+            <div class="quiz-item" id="q3">
+              <div class="quiz-question">
+                <span class="quiz-number">Q3.</span>
+                <span>What material is the bridge wire typically made of?</span>
+              </div>
+              <div class="quiz-options">
+                <label class="quiz-option" onclick="selectOption('q3', 0)">
+                  <span class="quiz-radio"></span> Copper
+                </label>
+                <label class="quiz-option" onclick="selectOption('q3', 1)">
+                  <span class="quiz-radio"></span> Silver
+                </label>
+                <label class="quiz-option" onclick="selectOption('q3', 2)">
+                  <span class="quiz-radio"></span> Manganin or Constantan
+                </label>
+                <label class="quiz-option" onclick="selectOption('q3', 3)">
+                  <span class="quiz-radio"></span> Aluminium
+                </label>
+              </div>
+            </div>
+
+            <!-- Q4 -->
+            <div class="quiz-item" id="q4">
+              <div class="quiz-question">
+                <span class="quiz-number">Q4.</span>
+                <span>What does "null deflection" in the galvanometer indicate?</span>
+              </div>
+              <div class="quiz-options">
+                <label class="quiz-option" onclick="selectOption('q4', 0)">
+                  <span class="quiz-radio"></span> Maximum current flows through it
+                </label>
+                <label class="quiz-option" onclick="selectOption('q4', 1)">
+                  <span class="quiz-radio"></span> The bridge is unbalanced
+                </label>
+                <label class="quiz-option" onclick="selectOption('q4', 2)">
+                  <span class="quiz-radio"></span> No current flows through the galvanometer — the bridge is balanced
+                </label>
+                <label class="quiz-option" onclick="selectOption('q4', 3)">
+                  <span class="quiz-radio"></span> The battery is disconnected
+                </label>
+              </div>
+            </div>
+
+            <!-- Q5 -->
+            <div class="quiz-item" id="q5">
+              <div class="quiz-question">
+                <span class="quiz-number">Q5.</span>
+                <span>Why should the balance point lie between 30 cm and 70 cm?</span>
+              </div>
+              <div class="quiz-options">
+                <label class="quiz-option" onclick="selectOption('q5', 0)">
+                  <span class="quiz-radio"></span> To minimize heating of the wire
+                </label>
+                <label class="quiz-option" onclick="selectOption('q5', 1)">
+                  <span class="quiz-radio"></span> For maximum sensitivity of the bridge
+                </label>
+                <label class="quiz-option" onclick="selectOption('q5', 2)">
+                  <span class="quiz-radio"></span> To reduce end corrections
+                </label>
+                <label class="quiz-option" onclick="selectOption('q5', 3)">
+                  <span class="quiz-radio"></span> It doesn't matter where the balance point is
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="lab-footer">
+    <div class="footer-content">
+      <div class="footer-logos">
+        <img src="iem-logo.webp" alt="IEM Logo" class="footer-logo">
+        <img src="iifr-logo.ico" alt="IIFR Logo" class="footer-logo">
+      </div>
+      <div class="footer-credits">
+        <p class="footer-developed">Developed by <span class="footer-name">Animesh Adhikari</span></p>
+        <p class="footer-developed"><span class="footer-name">Ankansubhro Dutta</span></p>
+        <p class="footer-developed"><span class="footer-name">Subasish Roy</span></p>
+        <p class="footer-guidance">Under the guidance of Dr. Subarna Datta</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 IEM-IIFR Physics Virtual Lab. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

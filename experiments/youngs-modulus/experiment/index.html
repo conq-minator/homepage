@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Physics Lab: Determination of Young's Modulus</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <h1>Young's Modulus of Elasticity Virtual Lab</h1>
+            <p class="subtitle">Method: Non-Uniform Bending (Flexure) of a Metallic Beam supported on Two Knife-Edges</p>
+        </div>
+        
+        <div style="display: flex; align-items: center; gap: 30px;">
+            <div class="theme-switch-wrapper">
+                <span style="color: white; font-size: 1.1rem;">☀️</span>
+                <label class="theme-switch" for="theme-checkbox">
+                    <input type="checkbox" id="theme-checkbox" onchange="toggleTheme()" />
+                    <div class="slider round"></div>
+                </label>
+                <span style="color: white; font-size: 1.1rem;">🌙</span>
+            </div>
+
+            <div class="folder-menu-wrapper" id="folderMenuWrapper" onclick="toggleFolderMenu(event)">
+                <div class="folder-back"></div>
+                <div class="folder-front"></div>
+                <div class="folder-pages">
+                    <button class="folder-page" onclick="openSidebar('theorySidebar')">📘 Theory</button>
+                    <button class="folder-page" onclick="openSidebar('procedureSidebar')">📋 Procedure</button>
+                    <button class="folder-page" onclick="openSidebar('apparatusSidebar')">🔬 Apparatus</button>
+                    <button class="folder-page" onclick="openSidebar('vernierSidebar')">📏 Vernier Caliper</button>
+                    <button class="folder-page" onclick="openSidebar('screwGaugeSidebar')">🔧 Screw Gauge</button>
+                    <button class="folder-page" onclick="openSidebar('errorSidebar')">📊 Error Analysis</button>
+                    <button class="folder-page" onclick="calculateYoungsModulus(); openSidebar('resultSidebar')">🏆 Result</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-panel">
+            <div class="card">
+                <h2>Experimental Setup Animation Workspace</h2>
+                <div class="canvas-container">
+                    <canvas id="labCanvas" width="800" height="380"></canvas>
+                </div>
+                
+                <div class="readouts">
+                    <div class="gauge">
+                        <label>Current Total Load</label>
+                        <div class="gauge-val" id="readoutMass">0.00</div>
+                        <div class="gauge-unit">kg (including hanger)</div>
+                    </div>
+                    <div class="gauge">
+                        <label>Microscope Scale</label>
+                        <div class="gauge-val" id="readoutMicroscope">4.500</div>
+                        <div class="gauge-unit">cm (Vertical Position)</div>
+                    </div>
+                    <div class="gauge">
+                        <label>True Depression (l)</label>
+                        <div class="gauge-val" id="readoutDeflection">0.000</div>
+                        <div class="gauge-unit">cm (Beam Central Bow)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Recorded Experimental Data Log (Table 2)</h2>
+                <p style="font-size: 0.85rem; color: var(--sub-text); margin-bottom:10px;">
+                    *Log data systematically for both loading cycles to accurately rule out material hysteresis loops.
+                </p>
+                <div class="table-responsive">
+                    <table id="observationTable">
+                        <thead>
+                            <tr>
+                                <th rowspan="2">No.<br>of<br>Obs.</th>
+                                <th rowspan="2">Load<br>(kg)</th>
+                                <th colspan="3">Microscope reading for<br>increasing load (cm)</th>
+                                <th colspan="3">Microscope reading for<br>decreasing load (cm)</th>
+                                <th rowspan="2">Mean<br>reading<br>(cm)</th>
+                                <th rowspan="2">Depression<br>l<br>(cm)</th>
+                            </tr>
+                            <tr>
+                                <th>Main<br>Scale</th>
+                                <th>Vernier<br>Scale</th>
+                                <th>Total</th>
+                                <th>Main<br>Scale</th>
+                                <th>Vernier<br>Scale</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 15px;">
+                    <button onclick="openGraphModal()" style="width: auto; padding: 10px 20px; background: var(--primary);">
+                        📈 Generate Graph
+                    </button>
+                    <button onclick="downloadDataset()" style="width: auto; padding: 10px 20px; background: var(--secondary);">
+                        📥 Download Dataset
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <div class="card" style="margin-bottom: 20px;">
+                <h2>Theoretical Reference</h2>
+                <div class="formula-box">
+                    <strong>Working Formula:</strong><br>
+                    <div style="text-align: center; margin: 8px 0; font-weight: bold; font-size:1.05rem;">
+                        Y = (g &middot; L&sup3; &middot; m) / (4 &middot; b &middot; d&sup3; &middot; l)
+                    </div>
+                    Where:<br>
+                    • <b>g</b> = 9.81 m/s&sup2; (981 cm/s&sup2;)<br>
+                    • <b>L</b> = Knife-edge gap spacing<br>
+                    • <b>b</b> = Breadth of the bar<br>
+                    • <b>d</b> = Depth of the bar<br>
+                    • <b>l</b> = Mean depression produced
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Bar Configuration</h2>
+                <p style="font-size:0.85rem; color: var(--sub-text); margin-bottom:12px;">Adjust the intrinsic physical dimensions of the specimen bar.</p>
+                
+                <div class="control-group">
+                    <label for="materialSelect">Select Specimen Material</label>
+                    <select id="materialSelect" onchange="changeMaterial()">
+                        <option value="steel">Structural Mild Steel (Y ≈ 2.0x10¹¹ N/m²)</option>
+                        <option value="brass">Industrial Yellow Brass (Y ≈ 1.0x10¹¹ N/m²)</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label>Bar Breadth (b): <span id="valB" style="font-weight:bold;">2.50</span> cm</label>
+                    <input type="range" id="breadthSlider" min="1.0" max="5.0" step="0.1" value="2.50">
+                </div>
+
+                <div class="control-group">
+                    <label>Bar Thickness/Depth (d): <span id="valD" style="font-weight:bold;">0.50</span> cm</label>
+                    <input type="range" id="depthSlider" min="0.1" max="2.0" step="0.05" value="0.50">
+                </div>
+
+                <div class="control-group">
+                    <label>Span Distance (L): <span id="valL" style="font-weight:bold;">70.0</span> cm</label>
+                    <input type="range" id="spanSlider" min="40.0" max="100.0" step="1.0" value="70.0">
+                </div>
+
+                <div class="btn-panel" style="margin-top:15px; margin-bottom: 25px;">
+                    <button id="commitConfigBtn" type="button" onclick="commitConfig()">Lock Config</button>
+                    <button id="editConfigBtn" type="button" class="danger" onclick="editConfig()" disabled>Edit Config</button>
+                </div>
+
+                <h2 style="margin-top:25px;">Load Manipulation</h2>
+                <div class="control-group">
+                    <label>Add Slotted Mass Unit (Step: 0.5 kg)</label>
+                    <div style="font-size:0.85rem; margin-bottom:5px; color: var(--sub-text);">Safe Operational Bound: 0.0 to 3.5 kg</div>
+                    <div class="btn-panel">
+                        <button type="button" onclick="adjustLoad(0.5)">+ 0.5 kg</button>
+                        <button type="button" class="danger" onclick="adjustLoad(-0.5)">- 0.5 kg</button>
+                    </div>
+                </div>
+
+                <div class="btn-panel" style="grid-template-columns: 1fr; margin-top:20px;">
+                    <button id="logIncBtn" onclick="logData('increasing')">Record Data for Load Increasing Point</button>
+                    <button id="logDecBtn" onclick="logData('decreasing')">Record Data for Load Decreasing Point</button>
+                    <button class="danger" onclick="resetExperiment()">Clear Data & Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals and Sidebars -->
+    <div id="graphModal" class="modal-overlay" onclick="closeGraphModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2 style="color: var(--heading-text); border: none; margin: 0; padding: 0; text-transform: uppercase;">Load vs. Depression</h2>
+                <button onclick="closeGraphModal()" class="close-modal-btn">&times;</button>
+            </div>
+            <div class="modal-body" style="background: white; border-radius: 4px; padding: 10px;">
+                <canvas id="graphCanvas" width="700" height="400"></canvas>
+                <div id="slopeDisplay" class="slope-display">
+                    Slope (l/m) = <span id="slopeValue">0.000000</span> cm/kg
+                </div>
+            </div>
+            <div class="modal-footer" style="margin-top: 25px; display: flex; justify-content: center;">
+                <button onclick="downloadGraph()" style="width: auto; padding: 12px 30px; font-size: 1.05rem;">
+                    ⬇️ Download Graph (PNG)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="sidebarOverlay" class="sidebar-backdrop" onclick="closeAllSidebars()"></div>
+
+    <!-- SIDEBARS -->
+    <div id="theorySidebar" class="side-panel" style="width: 450px; right: -450px;">
+        <div class="panel-header">
+            <h2 style="color: white; border: none; margin: 0; padding: 0;">Theoretical Reference</h2>
+            <button onclick="closeAllSidebars()" class="close-btn">&times;</button>
+        </div>
+        <div class="panel-content" style="line-height: 1.7; font-size: 1rem;">
+            <p style="margin-bottom: 15px;">If a light bar of breadth b and depth d is placed horizontally on two Knife-edges separated by a distance L, and a load of mass m, applied at the mid-point of the bar, produces a depression l of the bar, then Young’s modulus Y of the material of the bar is given by:</p>
+            <div class="formula-box" style="text-align: center; font-weight: bold; font-size: 1.1rem; margin: 15px 0;">
+                Y = (g &middot; L&sup3; &middot; m) / (4 &middot; b &middot; d&sup3; &middot; l)
+            </div>
+            <p style="margin-bottom: 15px;">Where g is the acceleration due to gravity, b and d are the breadth and depth of the bar respectively.</p>
+            <p style="margin-bottom: 15px;">This is the working formula of the experiment, and is valid so long as the slope of the bar at any point with respect to the unstrained position is much less than unity.</p>
+        </div>
+    </div>
+
+    <div id="procedureSidebar" class="side-panel" style="width: 450px; right: -450px;">
+        <div class="panel-header">
+            <h2 style="color: white; border: none; margin: 0; padding: 0;">Experimental Procedure</h2>
+            <button onclick="closeAllSidebars()" class="close-btn">&times;</button>
+        </div>
+        <div class="panel-content" style="line-height: 1.7; font-size: 0.95rem;">
+            <ol type="i" style="padding-left: 20px;">
+                <li style="margin-bottom: 12px;">Measure the length of the given bar with a meter scale and mark its mid-point.</li>
+                <li style="margin-bottom: 12px;">Mount on the bar, the frame F carrying a knife-edge. Now place the bar with its least dimension vertical, on the knife-edges.</li>
+                <li style="margin-bottom: 12px;">Bring the knife-edge of the frame F on the central transverse mark of the bar. Focus the eye-piece on the cross-wires.</li>
+                <li style="margin-bottom: 12px;">Determine the vernier constant of the microscope. With zero loads on the hanger, record the position.</li>
+                <li style="margin-bottom: 12px;">Increasing gradually the load in steps of 0.5kg and at each observation, record the vertical scale reading.</li>
+                <li style="margin-bottom: 12px;">Determine the least count of the screw gauge and measure depth d of the bar at a number of places.</li>
+            </ol>
+        </div>
+    </div>
+
+    <div id="apparatusSidebar" class="side-panel" style="width: 420px; right: -420px;">
+        <div class="panel-header">
+            <h2 style="color: white; border: none; margin: 0; padding: 0;">Required Apparatus</h2>
+            <button onclick="closeAllSidebars()" class="close-btn">&times;</button>
+        </div>
+        <div class="panel-content">
+            <div class="apparatus-list">
+                <div class="apparatus-item">
+                    <img src="screw_gauge.png" alt="Screw Gauge" class="apparatus-img">
+                    <div class="apparatus-info">
+                        <h3>Screw Gauge</h3>
+                        <p>Used for precision measurement of the beam's depth/thickness (d) at multiple points.</p>
+                    </div>
+                </div>
+                <div class="apparatus-item">
+                    <img src="slide_calipers.png" alt="Slide Calipers" class="apparatus-img">
+                    <div class="apparatus-info">
+                        <h3>Slide Calipers</h3>
+                        <p>Vernier instrument utilized to measure the uniform breadth (b) of the metallic beam.</p>
+                    </div>
+                </div>
+                <div class="apparatus-item">
+                    <img src="microscope.png" alt="Travelling Microscope" class="apparatus-img">
+                    <div class="apparatus-info">
+                        <h3>Travelling Microscope</h3>
+                        <p>Optical instrument used to measure the microscopic vertical depression (l).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="errorSidebar" class="side-panel" style="width:450px; right:-450px;">
+        <div class="panel-header">
+           <h2 style="color:white;border:none;margin:0;padding:0;">Error Analysis</h2>
+          <button onclick="closeAllSidebars()" class="close-btn">&times;</button>
+        </div>
+        <div class="panel-content">
+            <div class="formula-box">
+                <div style="text-align:center;font-size:1.1rem;font-weight:bold;">
+                    (δY/Y)<sub>max</sub> = 3δL/L + δb/b + 3δd/d + δl/l
+                </div>
+            </div>
+            <div class="control-group">
+                <label>δL (Meter Scale Error) cm</label>
+                <input type="number" id="deltaL" value="0.2" step="0.01">
+            </div>
+            <div class="control-group">
+                <label>δb (Vernier Caliper L.C.) cm</label>
+                <input type="number" id="deltaB" value="0.01" step="0.001">
+            </div>
+            <div class="control-group">
+                <label>δd (Screw Gauge L.C.) cm</label>
+                <input type="number" id="deltaD" value="0.001" step="0.0001">
+            </div>
+            <div class="control-group">
+                <label>δl (Microscope Error) cm</label>
+                <input type="number" id="deltaLsmall" value="0.002" step="0.0001">
+            </div>
+            <button onclick="calculateError()">Calculate Error</button>
+            <div class="formula-box" style="margin-top:20px;">
+                <strong>Current Experimental Values</strong><br><br>
+                L = <span id="currentL">70.0</span> cm<br>
+                b = <span id="currentB">2.50</span> cm<br>
+                d = <span id="currentD">0.50</span> cm<br>
+                l = <span id="currentDepression">0.000</span> cm
+                <hr style="margin:12px 0;">
+                <div id="errorResult">Percentage Error: <b>0.00%</b></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vernier Caliper Measurement Sidebar -->
+    <div id="vernierSidebar" class="side-panel" style="width: 550px; right: -550px;">
+        <div class="panel-header">
+            <h2 style="color: white; border: none; margin: 0; padding: 0;">Vernier Caliper: Measure Breadth (b)</h2>
+            <button onclick="closeAllSidebars()" class="close-btn">&times;</button>
+        </div>
+        <div class="panel-content">
+            <p style="margin-bottom:15px; font-size:0.9rem; color:var(--sub-text);">
+                Take 4 independent measurements of the bar's breadth across different points. 
+                <br><em>Note: You must click "Lock Config" in the main workspace before measuring.</em>
+            </p>
+            <div id="vc-container-slot">
+                <div style="padding: 20px; text-align:center; background: var(--muted-bg); border-radius:8px; border: 1px solid var(--border);">
+                    <em>Awaiting Specimen...<br>Please configure and lock the Bar Dimensions in the main workspace first.</em>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screw Gauge Measurement Sidebar -->
+    <div id="screwGaugeSidebar" class="side-panel" style="width: 550px; right: -550px;">
+        <div class="panel-header">
+            <h2 style="color: white; border: none; margin: 0; padding: 0;">Screw Gauge: Measure Depth (d)</h2>
+            <button onclick="closeAllSidebars()" class="close-btn">&times;</button>
+        </div>
+        <div class="panel-content">
+            <p style="margin-bottom:15px; font-size:0.9rem; color:var(--sub-text);">
+                Take 4 independent measurements of the bar's depth (thickness) across different points. 
+                <br><em>Note: You must click "Lock Config" in the main workspace before measuring.</em>
+            </p>
+            <div id="sg-container-slot">
+                <div style="padding: 20px; text-align:center; background: var(--muted-bg); border-radius:8px; border: 1px solid var(--border);">
+                    <em>Awaiting Specimen...<br>Please configure and lock the Bar Dimensions in the main workspace first.</em>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Template for Vernier Caliper HTML -->
+    <template id="vernier-caliper-template">
+        <div class="vernier-caliper-tool" id="vernier-caliper-root">
+            <div class="vc-header">
+                <h3>Vernier Caliper Simulator <button type="button" class="inline-help-btn" onclick="openInstrumentHelp('vernierCaliper')" title="How to read the Vernier Caliper">❓</button></h3>
+                <span class="vc-reading-badge" data-vc-badge>Reading 1 of 4</span>
+            </div>
+            <div class="vc-instrument-wrap">
+                <svg class="vc-svg" data-vc-svg viewBox="0 0 1100 240" width="100%" height="auto" preserveAspectRatio="xMidYMid meet" aria-label="Vernier caliper simulation"></svg>
+            </div>
+            <div class="vc-guide-box" data-vc-guide></div>
+            <div class="vc-input-section" data-vc-inputs style="display: none;">
+                <div class="vc-input-row">
+                    <div class="vc-field">
+                        <label>Main Scale Reading (MSR) cm</label>
+                        <input type="number" step="0.1" data-vc-msr placeholder="e.g. 2.5">
+                    </div>
+                    <div class="vc-field">
+                        <label>Vernier Coincidence (VSR)</label>
+                        <input type="number" step="1" min="0" max="10" data-vc-vernier placeholder="e.g. 4">
+                    </div>
+                    <div class="vc-field">
+                        <label>Final Reading cm</label>
+                        <input type="number" step="0.01" data-vc-final placeholder="e.g. 2.54">
+                    </div>
+                </div>
+                <div class="vc-actions">
+                    <button type="button" class="primary" data-vc-submit>Check Answers</button>
+                </div>
+                <div class="vc-error" data-vc-error role="alert"></div>
+            </div>
+            <div class="vc-actions" data-vc-nav>
+                <button type="button" class="primary" data-vc-next style="display: none;">Next Reading</button>
+            </div>
+        </div>
+    </template>
+
+    <!-- Hidden Template for Screw Gauge HTML -->
+    <template id="screw-gauge-template">
+        <div class="screw-gauge-tool" id="screw-gauge-root">
+            <div class="sg-header">
+                <h3>Screw Gauge Simulator <button type="button" class="inline-help-btn" onclick="openInstrumentHelp('screwGauge')" title="How to read the Screw Gauge">❓</button></h3>
+                <span class="sg-reading-badge" data-sg-badge>Reading 1 of 4</span>
+            </div>
+            <div class="sg-instrument-wrap">
+                <svg class="sg-svg" data-sg-svg viewBox="0 0 520 240" width="100%" height="auto" preserveAspectRatio="xMidYMid meet" aria-label="Screw gauge simulation"></svg>
+            </div>
+            <div class="sg-guide-box" data-sg-guide></div>
+            <div class="sg-input-section" data-sg-inputs style="display: none;">
+                <div class="sg-input-row">
+                    <div class="sg-field">
+                        <label>Main Scale Reading (MSR) mm</label>
+                        <input type="number" step="0.1" data-sg-msr placeholder="e.g. 3.0">
+                    </div>
+                    <div class="sg-field">
+                        <label>Circular Scale Reading (CSR)</label>
+                        <input type="number" step="1" min="0" max="99" data-sg-csr placeholder="e.g. 24">
+                    </div>
+                    <div class="sg-field">
+                        <label>Final Reading mm</label>
+                        <input type="number" step="0.01" data-sg-final placeholder="e.g. 3.24">
+                    </div>
+                </div>
+                <div class="sg-actions">
+                    <button type="button" class="primary" data-sg-submit>Check Answers</button>
+                </div>
+                <div class="sg-error" data-sg-error role="alert"></div>
+            </div>
+            <div class="sg-actions" data-sg-nav>
+                <button type="button" class="primary" data-sg-next style="display: none;">Next Reading</button>
+            </div>
+        </div>
+    </template>
+    <div id="resultSidebar" class="side-panel" style="width:450px; right:-450px;">
+        <div class="panel-header">
+            <h2 style="color:white;border:none;margin:0;padding:0;">
+                Experimental Result
+            </h2>
+            <button onclick="closeAllSidebars()" class="close-btn">&times;</button>
+        </div>
+
+        <div class="panel-content">
+
+            <div class="formula-box">
+                <strong>Young's Modulus Formula</strong>
+
+                <div style="
+                    text-align:center;
+                    font-size:1.15rem;
+                    font-weight:bold;
+                    margin-top:10px;
+                ">
+                    Y = (gL³m)/(4bd³l)
+                </div>
+            </div>
+
+            <button onclick="calculateYoungsModulus()">
+                Calculate Result
+            </button>
+
+            <div class="formula-box" style="margin-top:20px;">
+
+                <strong>Values Used</strong><br><br>
+
+                L = <span id="resultL">70.0</span> cm<br>
+                b = <span id="resultB">2.50</span> cm<br>
+                d = <span id="resultD">0.50</span> cm<br>
+                m = <span id="resultM">0.00</span> kg<br>
+                l = <span id="resultDepression">0.000</span> cm
+
+                <hr style="margin:12px 0;">
+
+                <div id="youngResult">
+                    Young's Modulus:
+                    <b>Not Calculated</b>
+                </div>
+
+                <div id="youngResultSI" style="margin-top:10px;">
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
